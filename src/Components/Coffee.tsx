@@ -105,6 +105,8 @@ export function Coffee(props: JSX.IntrinsicElements["group"]) {
             geometry={nodes.cup.geometry}
             material={nodes.cup.material}
             onClick={handleClick}
+            onPointerEnter={() => (document.body.style.cursor = "pointer")}
+            onPointerLeave={() => (document.body.style.cursor = "auto")}
           />
         </group>
       </MeshCollider>
