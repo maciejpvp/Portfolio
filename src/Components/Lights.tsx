@@ -7,7 +7,6 @@ export const Lights = () => {
   const directionalLightRef = useRef<DirectionalLight>(null!);
   useHelper(directionalLightRef, DirectionalLightHelper, 0.1);
 
-  // Leva controls for position and rotation
   const {
     positionX,
     positionY,
@@ -45,10 +44,6 @@ export const Lights = () => {
     { collapsed: true },
   );
 
-  // Update the light's position and rotation
-  // directionalLightRef.current?.position.set(positionX, positionY, positionZ);
-  // directionalLightRef.current?.rotation.set(rotationX, rotationY, rotationZ);
-
   const directionalLightSize = 0.1;
   return (
     <>
@@ -70,7 +65,7 @@ export const Lights = () => {
         shadow-camera-right={directionalLightSize}
         shadow-camera-bottom={-directionalLightSize}
         shadow-camera-left={-directionalLightSize}
-        shadow-bias={-0.001}
+        shadow-bias={-0.01}
         ref={directionalLightRef}
         position={[positionX, positionY, positionZ]}
         target-position={[targetPositionX, targetPositionY, targetPositionZ]}

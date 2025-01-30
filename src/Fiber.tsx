@@ -8,6 +8,7 @@ import { Lights } from "./Components/Lights";
 import { IPhone } from "./Components/Iphone";
 import { Coffee } from "./Components/Coffee";
 import { Physics } from "@react-three/rapier";
+import { Gamepad } from "./Components/GamePad";
 
 export const Fiber = () => {
   const three = useThree();
@@ -26,10 +27,10 @@ export const Fiber = () => {
     "Camera",
     {
       positionX: { value: -0.06, min: -1, max: 1, step: 0.001 },
-      positionY: { value: 3.28, min: 3, max: 4, step: 0.001 },
+      positionY: { value: 3.24, min: 3, max: 4, step: 0.001 },
       positionZ: { value: -0.02, min: -1, max: 1, step: 0.001 },
       lookAtPosX: { value: -0.4, min: -1, max: 1, step: 0.001 },
-      lookAtPosY: { value: 3.12, min: 3, max: 4, step: 0.001 },
+      lookAtPosY: { value: 3.19, min: 3, max: 4, step: 0.001 },
       lookAtPosZ: { value: -0.02, min: -1, max: 1, step: 0.001 },
       targetVisible: false,
     },
@@ -55,20 +56,21 @@ export const Fiber = () => {
         <meshBasicMaterial color={"red"} />
         <boxGeometry />
       </mesh>
-      <Physics debug gravity={[0, -1, 0]}>
+      <Physics gravity={[0, -1, 0]}>
         <Desk scale={0.1} />
         <Macbook
           scale={0.02}
           position={[0.2, 3, 0]}
           rotation-y={Math.PI * 0.5}
         />
-        <IPhone
-          scale={0.01}
-          rotation-x={Math.PI * 0.5}
-          rotation-y={Math.PI}
-          rotation-z={Math.PI * -0.5}
-        />
+        {/* <IPhone */}
+        {/*   scale={0.01} */}
+        {/*   rotation-x={Math.PI * 0.5} */}
+        {/*   rotation-y={Math.PI} */}
+        {/*   rotation-z={Math.PI * -0.5} */}
+        {/* /> */}
         <Coffee scale={0.0011} />
+        <Gamepad scale={0.1} position={[0.2, 3, 0]} />
       </Physics>
     </>
   );
