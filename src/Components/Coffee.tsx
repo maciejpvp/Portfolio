@@ -2,7 +2,12 @@ import * as THREE from "three";
 import { useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { RigidBody, MeshCollider, RapierRigidBody } from "@react-three/rapier";
+import {
+  RigidBody,
+  MeshCollider,
+  RapierRigidBody,
+  CapsuleCollider,
+} from "@react-three/rapier";
 import { folder, useControls } from "leva";
 
 // Define the structure of the GLTF model
@@ -14,7 +19,10 @@ interface GLTFResult extends GLTF {
   materials: {};
 }
 
-export function Coffee(props: JSX.IntrinsicElements["group"]) {
+export function Coffee({
+  offset = 0,
+  ...props
+}: JSX.IntrinsicElements["group"] & { offset?: number }) {
   const coffeeRef = useRef<RapierRigidBody>(null!);
   const { nodes } = useGLTF("/coffee.glb") as GLTFResult;
   const texture = useTexture("/coffee.jpg");
@@ -26,9 +34,9 @@ export function Coffee(props: JSX.IntrinsicElements["group"]) {
       "Coffee",
       {
         Position: folder({
-          positionX: { value: -0.2, min: -1, max: 0, step: 0.0001 },
-          positionY: { value: 3.195, min: 3, max: 4, step: 0.00001 },
-          positionZ: { value: -0.06, min: -0.2, max: 0.2, step: 0.001 },
+          positionX: { value: -0.23, min: -1, max: 0, step: 0.0001 },
+          positionY: { value: 3.19, min: 3, max: 4, step: 0.00001 },
+          positionZ: { value: -0.08, min: -0.2, max: 0.2, step: 0.001 },
         }),
         Rotation: folder({
           rotationX: { value: 0, min: 0, max: Math.PI * 2, step: 0.001 },
@@ -42,30 +50,33 @@ export function Coffee(props: JSX.IntrinsicElements["group"]) {
   const handleClick = () => {
     if (!coffeeRef.current) return;
     coffeeRef.current.applyImpulse(
-      new THREE.Vector3(-0.000000001, 0.000000015, 0),
+      new THREE.Vector3(-0.00000001, 0.00000015, 0),
       true,
     );
     coffeeRef.current.applyTorqueImpulse(
-      new THREE.Vector3(0, 0.000000000002, 0.000000000003),
+      new THREE.Vector3(0, 0.00000000002, 0.000000000003),
       true,
     );
   };
 
   return (
-    <RigidBody ref={coffeeRef} colliders={false}>
-      <MeshCollider type="trimesh">
-        <group
-          {...props}
-          dispose={null}
-          // position={[positionX, positionY, positionZ]}
-          rotation={[rotationX, rotationY, rotationZ]}
-        >
+    <>
+      <RigidBody
+        ref={coffeeRef}
+        colliders={"hull"}
+        position={[positionX, positionY, positionZ + offset]}
+        rotation={[rotationX, rotationY, rotationZ]}
+      >
+        <group {...props} dispose={null}>
           <mesh
             castShadow
             receiveShadow
             rotation-x={Math.PI * 0.5}
             geometry={nodes.cup.geometry}
-            onClick={handleClick}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClick();
+            }}
             onPointerEnter={() => (document.body.style.cursor = "pointer")}
             onPointerLeave={() => (document.body.style.cursor = "auto")}
           >
@@ -77,8 +88,8 @@ export function Coffee(props: JSX.IntrinsicElements["group"]) {
             />
           </mesh>
         </group>
-      </MeshCollider>
-    </RigidBody>
+      </RigidBody>
+    </>
   );
 }
 

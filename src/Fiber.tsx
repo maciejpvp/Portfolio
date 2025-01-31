@@ -58,6 +58,14 @@ export const Fiber = () => {
     }),
   });
 
+  const miscDebug = useControls(
+    "Misc",
+    {
+      showCollisions: false,
+    },
+    { collapsed: true },
+  );
+
   useFrame(() => {
     camera.position.x = THREE.MathUtils.lerp(
       camera.position.x,
@@ -106,7 +114,7 @@ export const Fiber = () => {
         <meshBasicMaterial color={"red"} />
         <boxGeometry />
       </mesh>
-      <Physics gravity={[0, -1, 0]}>
+      <Physics debug={miscDebug.showCollisions} gravity={[0, -1, 0]}>
         <Desk scale={0.1} />
         <Macbook
           scale={0.02}
@@ -119,11 +127,13 @@ export const Fiber = () => {
         {/*   rotation-y={Math.PI} */}
         {/*   rotation-z={Math.PI * -0.5} */}
         {/* /> */}
-        <Coffee scale={0.0011} position={[-0.225, 3.195, -0.08]} />
+        <Coffee scale={0.0011} />
+        <Coffee scale={0.0011} offset={-0.013} />
+        <Coffee scale={0.0011} offset={-0.026} />
         {/* <Coffee scale={0.0011} position={[-0.225, 3.195, -0.093]} /> */}
         <Gamepad scale={0.1} position={[0.2, 3, 0]} />
         {/* <HeadsetStand scale={0.1} position={[0.2, 3, 0]} /> */}
-        {/* <Headset scale={0.1} position={[0.2, 3, 0]} /> */}
+        <Headset scale={0.1} position={[0.2, 3, 0]} />
       </Physics>
     </>
   );

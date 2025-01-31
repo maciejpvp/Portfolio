@@ -154,7 +154,10 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
         receiveShadow
         geometry={nodes.Plane010.geometry}
         material={materials["Material.035"]}
-        onClick={() => console.log("cross")}
+        onPointerEnter={() => (document.body.style.cursor = "pointer")}
+        onPointerLeave={() => (document.body.style.cursor = "auto")}
+        position-y={clicked === "cross" ? -0.025 : 0}
+        onClick={() => handleClick("cross")}
       />
     </group>
   );
