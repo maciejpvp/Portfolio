@@ -1,8 +1,9 @@
-import { useGLTF } from "@react-three/drei";
-import { ReactThreeFiber } from "@react-three/fiber";
+import { meshBounds, useGLTF } from "@react-three/drei";
+import { ReactThreeFiber, ThreeEvent } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
 import * as THREE from "three";
+import useCameraStore from "../Utils/store";
 
 type PrimitiveProps = Omit<
   ReactThreeFiber.Object3DNode<THREE.Object3D, typeof THREE.Object3D>,
@@ -11,6 +12,7 @@ type PrimitiveProps = Omit<
 
 export const Desk = (props: PrimitiveProps) => {
   const { scene } = useGLTF("./desk.gltf");
+  const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
 
   const { position } = useControls(
     "Desk",
@@ -26,7 +28,17 @@ export const Desk = (props: PrimitiveProps) => {
 
   return (
     <RigidBody type="fixed" restitution={1}>
-      <primitive {...props} object={scene} position={position} receiveShadows />
+      <primitive
+        {...props}
+        object={scene}
+        raycast={meshBounds}
+        position={position}
+        receiveShadows
+        onClick={(e: ThreeEvent<MouseEvent>) => {
+          e.stopPropagation();
+          setSelectedCamera(0);
+        }}
+      />
       ;
     </RigidBody>
   );

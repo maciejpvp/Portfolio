@@ -1,7 +1,6 @@
 import { Canvas } from "@react-three/fiber";
 import { Fiber } from "./Fiber";
 import { Suspense } from "react";
-import { OrbitControls } from "@react-three/drei";
 
 export const App = () => {
   return (
@@ -12,7 +11,6 @@ export const App = () => {
       >
         <Suspense fallback={null}>
           <Fiber />
-          <OrbitControls />
         </Suspense>
       </Canvas>
     </div>

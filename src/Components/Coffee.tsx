@@ -57,7 +57,7 @@ export function Coffee(props: JSX.IntrinsicElements["group"]) {
         <group
           {...props}
           dispose={null}
-          position={[positionX, positionY, positionZ]}
+          // position={[positionX, positionY, positionZ]}
           rotation={[rotationX, rotationY, rotationZ]}
         >
           <mesh
