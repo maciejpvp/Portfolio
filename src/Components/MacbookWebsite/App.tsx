@@ -1,24 +1,23 @@
-import { useState } from "react";
 import styled from "styled-components";
+import { ProfilePicture } from "./ProfilePicture";
 
 const StyledApp = styled.div`
-  background-color: white;
+  background-color: #2c2724;
+  color: #e2d7d0;
   display: flex;
-  fiex-direction: column;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 400px;
-  height: 260px;
+  height: 265px;
   border-radius: 5px;
 `;
 
 export const App = () => {
-  const [count, setCount] = useState<number>(0);
   return (
     <StyledApp>
-      <p>I use Arch (BTW)</p>
-      <p>Count: {count}</p>
-      <button onClick={() => setCount((prev) => prev + 1)}>Click</button>
+      <ProfilePicture />
+      <p>Hi,</p>
     </StyledApp>
   );
 };

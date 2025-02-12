@@ -43,17 +43,18 @@ export const Fiber = () => {
       targetVisible: false,
       freeCamera: false,
     },
-    { collapsed: true },
+    { collapsed: true }
   );
 
   useControls("Camera Presets", {
     default: button(() => setSelectedCamera(0)),
     gamepad: button(() => setSelectedCamera(1)),
     macbook: button(() => setSelectedCamera(2)),
+    headset: button(() => setSelectedCamera(3)),
     logPosition: button(() => {
       console.log(
         { positionX, positionY, positionZ },
-        { lookAtPosX, lookAtPosY, lookAtPosZ },
+        { lookAtPosX, lookAtPosY, lookAtPosZ }
       );
     }),
   });
@@ -63,40 +64,40 @@ export const Fiber = () => {
     {
       showCollisions: false,
     },
-    { collapsed: true },
+    { collapsed: true }
   );
 
   useFrame(() => {
     camera.position.x = THREE.MathUtils.lerp(
       camera.position.x,
       freeCamera ? positionX : cameraPresets[selectedCamera].positionX,
-      0.1,
+      0.1
     );
     camera.position.y = THREE.MathUtils.lerp(
       camera.position.y,
       freeCamera ? positionY : cameraPresets[selectedCamera].positionY,
-      0.1,
+      0.1
     );
     camera.position.z = THREE.MathUtils.lerp(
       camera.position.z,
       freeCamera ? positionZ : cameraPresets[selectedCamera].positionZ,
-      0.1,
+      0.1
     );
 
     lookAtMeshRef.current.position.x = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.x,
       freeCamera ? lookAtPosX : cameraPresets[selectedCamera].lookAtX,
-      0.1,
+      0.1
     );
     lookAtMeshRef.current.position.y = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.y,
       freeCamera ? lookAtPosY : cameraPresets[selectedCamera].lookAtY,
-      0.1,
+      0.1
     );
     lookAtMeshRef.current.position.z = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.z,
       freeCamera ? lookAtPosZ : cameraPresets[selectedCamera].lookAtZ,
-      0.1,
+      0.1
     );
 
     camera.lookAt(lookAtMeshRef.current.position);

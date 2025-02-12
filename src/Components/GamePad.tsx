@@ -36,7 +36,7 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
     "Gamepad",
     {
       Position: folder({
-        positionX: { value: -0.226, min: -0.3, max: -0.2, step: 0.001 },
+        positionX: { value: -0.2, min: -0.3, max: -0.2, step: 0.001 },
         positionY: { value: 3.1935, min: 3, max: 3.2, step: 0.001 },
         positionZ: { value: 0.04, min: -0.2, max: 0.2, step: 0.001 },
       }),
@@ -47,7 +47,7 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
       }),
       scale: { value: 0.0136, min: 0.01, max: 0.04, step: 0.0001 },
     },
-    { collapsed: true },
+    { collapsed: true }
   );
 
   console.log(gamepadDebug);
