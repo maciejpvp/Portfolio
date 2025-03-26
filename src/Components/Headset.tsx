@@ -3,6 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import useCameraStore from "../Utils/store";
+import { useEffect } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -23,23 +24,39 @@ type GLTFResult = GLTF & {
   };
 };
 
+const lofiAudio = new Audio("/lofi.wav");
+lofiAudio.loop = true;
+
 export const Headset = (props: JSX.IntrinsicElements["group"]) => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
+  const selectedCamera = useCameraStore((state) => state.selectedCamera);
+
   const { nodes, materials } = useGLTF("/headset.gltf") as GLTFResult;
   const headsetDebug = useControls("Headset", {
     Position: folder({
-      positionX: { value: -0.221, min: -0.4, max: -0.2, step: 0.001 },
-      positionY: { value: 3.1925, min: 3, max: 3.2, step: 0.001 },
-      positionZ: { value: 0.023, min: -0.2, max: 0.2, step: 0.001 },
+      positionX: { value: -0.24, min: -0.4, max: -0.2, step: 0.001 },
+      positionY: { value: 3.1923, min: 3.19, max: 3.2, step: 0.001 },
+      positionZ: { value: 0.05, min: -0.2, max: 0.2, step: 0.001 },
     }),
     Rotation: folder({
       rotationX: { value: 1.631, min: 0, max: Math.PI * 2, step: 0.001 },
-      rotationY: { value: 3.286, min: 0, max: Math.PI * 2, step: 0.001 },
-      rotationZ: { value: 5.001, min: 0, max: Math.PI * 2, step: 0.001 },
+      rotationY: { value: 3.29, min: 0, max: Math.PI * 2, step: 0.001 },
+      rotationZ: { value: 5.18, min: 0, max: Math.PI * 2, step: 0.001 },
     }),
     scale: { value: 0.0104, min: 0.01, max: 0.04, step: 0.0001 },
   });
-  console.log(headsetDebug);
+
+  useEffect(() => {
+    // 3 is a camera focused on headset
+    if (selectedCamera === 3) {
+      console.log(lofiAudio);
+      lofiAudio.play();
+    } else {
+      lofiAudio.pause();
+      lofiAudio.currentTime = 0;
+    }
+  }, [selectedCamera]);
+
   return (
     <group
       {...props}

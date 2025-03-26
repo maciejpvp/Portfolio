@@ -7,7 +7,14 @@ export const App = () => {
     <div className="canvas">
       <Canvas
         shadows
-        camera={{ position: [0, 3.5, 0], fov: 45, near: 0.001, far: 10 }}
+        gl={{ alpha: true }}
+        style={{ background: "none" }}
+        camera={{
+          position: [20, 5, 0],
+          fov: 30,
+          near: 0.001,
+          far: 10,
+        }}
       >
         <Suspense fallback={null}>
           <Fiber />

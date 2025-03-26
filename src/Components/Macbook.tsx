@@ -9,6 +9,7 @@ import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import { App } from "./MacbookWebsite/App";
 import useCameraStore from "../Utils/store";
+import gsap from "gsap/src";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -66,23 +67,40 @@ type GLTFResult = GLTF & {
 export function Macbook(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/laptop.gltf") as GLTFResult;
   const [showScreen, setShowScreen] = useState<boolean>(false);
+  const [screenRotation, setScreenRotation] = useState(3.14);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
+
+  useEffect(() => {
+    const openScreen = () => {
+      const interval = setInterval(() => {
+        setScreenRotation((prev) => {
+          if (prev <= 1.6) {
+            clearInterval(interval);
+            return prev;
+          }
+          return prev - 0.03;
+        });
+      }, 1);
+    };
+    setTimeout(() => {
+      openScreen();
+    }, 1500);
+  }, []);
 
   useEffect(() => {
     setShowScreen(true);
   }, [showScreen]);
-  const { positionX, positionY, positionZ, screenRotation, scale } =
-    useControls(
-      "Macbook",
-      {
-        positionX: { value: -0.22, min: -1, max: 1, step: 0.0001 },
-        positionY: { value: 3.1925, min: 3, max: 4, step: 0.0001 },
-        positionZ: { value: -0.02, min: -1, max: 1, step: 0.0001 },
-        screenRotation: { value: 1.6, min: 0.9, max: Math.PI, step: 0.001 },
-        scale: { value: 0.023, min: 0.01, max: 0.04, step: 0.0001 },
-      },
-      { collapsed: true },
-    );
+  const { positionX, positionY, positionZ, scale } = useControls(
+    "Macbook",
+    {
+      positionX: { value: -0.22, min: -1, max: 1, step: 0.0001 },
+      positionY: { value: 3.1925, min: 3, max: 4, step: 0.0001 },
+      positionZ: { value: -0.02, min: -1, max: 1, step: 0.0001 },
+      // screenRotation: { value: 1.6, min: 0.9, max: Math.PI, step: 0.001 },
+      scale: { value: 0.023, min: 0.01, max: 0.04, step: 0.0001 },
+    },
+    { collapsed: true },
+  );
   const htmlDbg = useControls(
     "Html",
     {
@@ -102,7 +120,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
         },
         { collapsed: true },
       ),
-      distanceFactor: { value: 5, min: 1, max: 10, step: 0.001 },
+      distanceFactor: { value: 1.25, min: 1, max: 10, step: 0.001 },
     },
     { collapsed: true },
   );
@@ -303,6 +321,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
             {showScreen && (
               <Html
                 transform
+                occlude
                 distanceFactor={htmlDbg.distanceFactor}
                 position={[
                   htmlDbg.positionX,
@@ -315,7 +334,9 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
                   htmlDbg.rotationZ,
                 ]}
               >
-                <App />
+                <div style={{ transform: "scale(4)" }}>
+                  <App />
+                </div>
               </Html>
             )}
           </mesh>

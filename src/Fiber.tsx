@@ -1,19 +1,20 @@
 import { useThree, useFrame } from "react-three-fiber";
 import { button, useControls } from "leva";
 import { Desk } from "./Components/Desk";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { Macbook } from "./Components/Macbook";
 import { Mesh } from "three";
 import { Lights } from "./Components/Lights";
-// import { IPhone } from "./Components/Iphone";
 import { Coffee } from "./Components/Coffee";
 import { Physics } from "@react-three/rapier";
 import { Gamepad } from "./Components/GamePad";
 import * as THREE from "three";
 import { cameraPresets } from "./Utils/cameraPresets.ts";
 import useCameraStore from "./Utils/store.ts";
-import { HeadsetStand } from "./Components/HeadsetStand.tsx";
 import { Headset } from "./Components/Headset.tsx";
+import { Wall } from "./Components/Wall.tsx";
+import { IPhone } from "./Components/Iphone.tsx";
+import { Floor } from "./Components/Floor.tsx";
 
 export const Fiber = () => {
   const three = useThree();
@@ -34,7 +35,7 @@ export const Fiber = () => {
   } = useControls(
     "Camera",
     {
-      positionX: { value: -0.078, min: -0.25, max: 0, step: 0.001 },
+      positionX: { value: -0.078, min: -0.25, max: 10, step: 0.001 },
       positionY: { value: 3.25, min: 3.23, max: 3.3, step: 0.001 },
       positionZ: { value: -0.02, min: -1, max: 1, step: 0.001 },
       lookAtPosX: { value: -0.4, min: -1, max: 1, step: 0.001 },
@@ -43,7 +44,7 @@ export const Fiber = () => {
       targetVisible: false,
       freeCamera: false,
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   useControls("Camera Presets", {
@@ -54,7 +55,7 @@ export const Fiber = () => {
     logPosition: button(() => {
       console.log(
         { positionX, positionY, positionZ },
-        { lookAtPosX, lookAtPosY, lookAtPosZ }
+        { lookAtPosX, lookAtPosY, lookAtPosZ },
       );
     }),
   });
@@ -64,40 +65,40 @@ export const Fiber = () => {
     {
       showCollisions: false,
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   useFrame(() => {
     camera.position.x = THREE.MathUtils.lerp(
       camera.position.x,
       freeCamera ? positionX : cameraPresets[selectedCamera].positionX,
-      0.1
+      0.1,
     );
     camera.position.y = THREE.MathUtils.lerp(
       camera.position.y,
       freeCamera ? positionY : cameraPresets[selectedCamera].positionY,
-      0.1
+      0.1,
     );
     camera.position.z = THREE.MathUtils.lerp(
       camera.position.z,
       freeCamera ? positionZ : cameraPresets[selectedCamera].positionZ,
-      0.1
+      0.1,
     );
 
     lookAtMeshRef.current.position.x = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.x,
       freeCamera ? lookAtPosX : cameraPresets[selectedCamera].lookAtX,
-      0.1
+      0.1,
     );
     lookAtMeshRef.current.position.y = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.y,
       freeCamera ? lookAtPosY : cameraPresets[selectedCamera].lookAtY,
-      0.1
+      0.1,
     );
     lookAtMeshRef.current.position.z = THREE.MathUtils.lerp(
       lookAtMeshRef.current.position.z,
       freeCamera ? lookAtPosZ : cameraPresets[selectedCamera].lookAtZ,
-      0.1
+      0.1,
     );
 
     camera.lookAt(lookAtMeshRef.current.position);
@@ -105,13 +106,9 @@ export const Fiber = () => {
 
   return (
     <>
-      <color attach="background" args={["#262626"]} />
+      {/* <color attach="background" args={["#262626"]} /> */}
       <Lights />
-      <mesh
-        ref={lookAtMeshRef}
-        scale={targetVisible ? 0.03 : 0}
-        // position={[lookAtPosX, lookAtPosY, lookAtPosZ]}
-      >
+      <mesh ref={lookAtMeshRef} scale={targetVisible ? 0.03 : 0}>
         <meshBasicMaterial color={"red"} />
         <boxGeometry />
       </mesh>
@@ -122,19 +119,19 @@ export const Fiber = () => {
           position={[0.2, 3, 0]}
           rotation-y={Math.PI * 0.5}
         />
-        {/* <IPhone */}
-        {/*   scale={0.01} */}
-        {/*   rotation-x={Math.PI * 0.5} */}
-        {/*   rotation-y={Math.PI} */}
-        {/*   rotation-z={Math.PI * -0.5} */}
-        {/* /> */}
+        <IPhone
+          scale={0.01}
+          rotation-x={Math.PI * 0.5}
+          rotation-y={Math.PI}
+          rotation-z={Math.PI * -0.5}
+        />
         <Coffee scale={0.0011} />
         <Coffee scale={0.0011} offset={-0.013} />
         <Coffee scale={0.0011} offset={-0.026} />
-        {/* <Coffee scale={0.0011} position={[-0.225, 3.195, -0.093]} /> */}
         <Gamepad scale={0.1} position={[0.2, 3, 0]} />
-        {/* <HeadsetStand scale={0.1} position={[0.2, 3, 0]} /> */}
         <Headset scale={0.1} position={[0.2, 3, 0]} />
+        <Wall />
+        <Floor />
       </Physics>
     </>
   );

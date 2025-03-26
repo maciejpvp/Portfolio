@@ -14,16 +14,35 @@ export const Desk = (props: PrimitiveProps) => {
   const { scene } = useGLTF("./desk.gltf");
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
 
-  const { position } = useControls(
+  const { position, roughness, metalness } = useControls(
     "Desk",
     {
       position: { value: [0.2, 0, 0], step: 0.1 },
+      roughness: { value: 0.9, min: 0, max: 1, step: 0.05 },
+      metalness: { value: 0.3, min: 0, max: 1, step: 0.05 },
     },
     { collapsed: true },
   );
 
   scene.traverse((child) => {
-    child.receiveShadow = true;
+    if ((child as THREE.Mesh).isMesh) {
+      const mesh = child as THREE.Mesh;
+      mesh.receiveShadow = true;
+
+      if (mesh.material) {
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((mat) => {
+            if (mat instanceof THREE.MeshStandardMaterial) {
+              mat.roughness = roughness;
+              mat.metalness = metalness;
+            }
+          });
+        } else if (mesh.material instanceof THREE.MeshStandardMaterial) {
+          mesh.material.roughness = roughness;
+          mesh.material.metalness = metalness;
+        }
+      }
+    }
   });
 
   return (
@@ -39,7 +58,6 @@ export const Desk = (props: PrimitiveProps) => {
           setSelectedCamera(0);
         }}
       />
-      ;
     </RigidBody>
   );
 };

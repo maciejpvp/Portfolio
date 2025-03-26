@@ -1,11 +1,11 @@
 export const cameraPresets = [
   {
     // Default
-    positionX: -0.078,
+    positionX: -0.058,
     positionY: 3.25,
     positionZ: -0.02,
     lookAtX: -0.4,
-    lookAtY: 3.19,
+    lookAtY: 3.18,
     lookAtZ: -0.02,
   },
   {
@@ -19,8 +19,8 @@ export const cameraPresets = [
   },
   {
     // Macbook
-    positionX: -0.15,
-    positionY: 3.22,
+    positionX: -0.122,
+    positionY: 3.24,
     positionZ: -0.02,
     lookAtX: -0.4,
     lookAtY: 3.19,
@@ -28,11 +28,11 @@ export const cameraPresets = [
   },
   {
     //Headset
-    positionX: -0.178,
+    positionX: -0.2,
     positionY: 3.25,
-    positionZ: 0,
-    lookAtX: -0.3,
-    lookAtY: 3.15,
-    lookAtZ: 0.05,
+    positionZ: 0.02,
+    lookAtX: -0.35,
+    lookAtY: 3.1,
+    lookAtZ: 0.1,
   },
 ];
