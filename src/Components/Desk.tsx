@@ -3,7 +3,7 @@ import { ReactThreeFiber, ThreeEvent } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
 import * as THREE from "three";
-import useCameraStore from "../Utils/store";
+import useCameraStore from "../Utils/useCameraStore";
 
 type PrimitiveProps = Omit<
   ReactThreeFiber.Object3DNode<THREE.Object3D, typeof THREE.Object3D>,
@@ -21,7 +21,7 @@ export const Desk = (props: PrimitiveProps) => {
       roughness: { value: 0.9, min: 0, max: 1, step: 0.05 },
       metalness: { value: 0.3, min: 0, max: 1, step: 0.05 },
     },
-    { collapsed: true },
+    { collapsed: true }
   );
 
   scene.traverse((child) => {

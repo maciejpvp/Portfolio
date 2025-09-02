@@ -1,4 +1,4 @@
-import { useThree, useFrame } from "react-three-fiber";
+import { useThree, useFrame } from "@react-three/fiber";
 import { button, useControls } from "leva";
 import { Desk } from "./Components/Desk";
 import { useRef } from "react";
@@ -10,7 +10,7 @@ import { Physics } from "@react-three/rapier";
 import { Gamepad } from "./Components/GamePad";
 import * as THREE from "three";
 import { cameraPresets } from "./Utils/cameraPresets.ts";
-import useCameraStore from "./Utils/store.ts";
+import useCameraStore from "./Utils/useCameraStore.ts";
 import { Headset } from "./Components/Headset.tsx";
 import { Wall } from "./Components/Wall.tsx";
 import { IPhone } from "./Components/Iphone.tsx";

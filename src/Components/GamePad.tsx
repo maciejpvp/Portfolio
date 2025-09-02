@@ -3,7 +3,7 @@ import { useState } from "react";
 import { meshBounds, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
-import useCameraStore from "../Utils/store";
+import useCameraStore from "../Utils/useCameraStore";
 import { ThreeEvent } from "react-three-fiber";
 
 type GLTFResult = GLTF & {
@@ -49,8 +49,6 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
     },
     { collapsed: true }
   );
-
-  console.log(gamepadDebug);
 
   const handleClick = (button: string) => {
     setClicked(button);

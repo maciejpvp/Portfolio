@@ -19,11 +19,11 @@ export const cameraPresets = [
   },
   {
     // Macbook
-    positionX: -0.122,
-    positionY: 3.24,
+    positionX: -0.1254,
+    positionY: 3.23,
     positionZ: -0.02,
     lookAtX: -0.4,
-    lookAtY: 3.19,
+    lookAtY: 3.2,
     lookAtZ: -0.02,
   },
   {

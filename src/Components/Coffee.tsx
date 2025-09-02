@@ -2,12 +2,7 @@ import * as THREE from "three";
 import { useRef } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import {
-  RigidBody,
-  MeshCollider,
-  RapierRigidBody,
-  CapsuleCollider,
-} from "@react-three/rapier";
+import { RigidBody, RapierRigidBody } from "@react-three/rapier";
 import { folder, useControls } from "leva";
 
 // Define the structure of the GLTF model
@@ -44,18 +39,18 @@ export function Coffee({
           rotationZ: { value: 0, min: 0, max: Math.PI * 2, step: 0.001 },
         }),
       },
-      { collapsed: true },
+      { collapsed: true }
     );
 
   const handleClick = () => {
     if (!coffeeRef.current) return;
     coffeeRef.current.applyImpulse(
       new THREE.Vector3(-0.00000001, 0.00000015, 0),
-      true,
+      true
     );
     coffeeRef.current.applyTorqueImpulse(
       new THREE.Vector3(0, 0.00000000002, 0.000000000003),
-      true,
+      true
     );
   };
 

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
-import useCameraStore from "../Utils/store";
+import useCameraStore from "../Utils/useCameraStore";
 import { useEffect } from "react";
 
 type GLTFResult = GLTF & {

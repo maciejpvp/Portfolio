@@ -1,7 +1,7 @@
 import { ThreeEvent, useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
 import { TextureLoader, RepeatWrapping } from "three";
-import useCameraStore from "../Utils/store";
+import useCameraStore from "../Utils/useCameraStore";
 
 export const Wall = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
@@ -18,10 +18,8 @@ export const Wall = () => {
       positionZ: { value: -0.0139, min: -1, max: 1, step: 0.001 },
       rotationY: { value: Math.PI * 0.5, min: 0, max: Math.PI, step: 0.001 },
     },
-    { collapsed: true },
+    { collapsed: true }
   );
-
-  console.log(positionX, positionY, positionZ);
 
   return (
     <mesh
