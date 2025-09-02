@@ -1,5 +1,5 @@
 import { meshBounds, useGLTF } from "@react-three/drei";
-import { ReactThreeFiber, ThreeEvent } from "@react-three/fiber";
+import { ReactThreeFiber, ThreeEvent, useLoader } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
 import * as THREE from "three";
@@ -18,11 +18,13 @@ export const Desk = (props: PrimitiveProps) => {
     "Desk",
     {
       position: { value: [0.2, 0, 0], step: 0.1 },
-      roughness: { value: 0.9, min: 0, max: 1, step: 0.05 },
-      metalness: { value: 0.3, min: 0, max: 1, step: 0.05 },
+      roughness: { value: 6, min: 0, max: 10, step: 0.05 },
+      metalness: { value: 0.1, min: 0, max: 10, step: 0.05 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
+
+  const texture = useLoader(THREE.TextureLoader, "/Desk/desk.jpg");
 
   scene.traverse((child) => {
     if ((child as THREE.Mesh).isMesh) {
@@ -35,11 +37,15 @@ export const Desk = (props: PrimitiveProps) => {
             if (mat instanceof THREE.MeshStandardMaterial) {
               mat.roughness = roughness;
               mat.metalness = metalness;
+              mat.map = texture;
+              mat.needsUpdate = true;
             }
           });
         } else if (mesh.material instanceof THREE.MeshStandardMaterial) {
           mesh.material.roughness = roughness;
           mesh.material.metalness = metalness;
+          mesh.material.map = texture; // <-- apply texture
+          mesh.material.needsUpdate = true; // <-- important!
         }
       }
     }

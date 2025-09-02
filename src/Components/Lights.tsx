@@ -45,7 +45,7 @@ export const Lights = () => {
       targetPositionZ: { value: 0.02, min: -1, max: 1, step: 0.001 },
       helperVisible: true,
     }),
-    { collapsed: true }
+    { collapsed: true },
   );
 
   useEffect(() => {
@@ -55,10 +55,10 @@ export const Lights = () => {
   useHelper(
     helperVisible ? directionalLightRef : null,
     DirectionalLightHelper,
-    0.1
+    0.1,
   );
 
-  const directionalLightSize = 0.1;
+  const directionalLightSize = 0.01;
   return (
     <>
       <mesh
@@ -69,7 +69,7 @@ export const Lights = () => {
         <meshBasicMaterial color={"blue"} />
         <boxGeometry />
       </mesh>
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.2} />
       <directionalLight
         castShadow={true}
         shadow-mapSize={[1024, 1024]}
