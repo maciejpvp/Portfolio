@@ -1,19 +1,6 @@
-import styled from "styled-components";
 import useCameraStore from "../../Utils/useCameraStore";
 import { LeftSideComponent } from "./LeftSide";
 import { RightSideComponent } from "./RightSide";
-
-const StyledApp = styled.div`
-  background-color: oklch(20.5% 0 0);
-  display: grid;
-  grid-template-columns: 30% 70%;
-  padding: 20px 5px;
-  gap: 10px;
-  color: #e2d7d0;
-  width: 400px;
-  height: 265px;
-  border-radius: 5px;
-`;
 
 export const App = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
@@ -24,9 +11,12 @@ export const App = () => {
   };
 
   return (
-    <StyledApp onClick={handleClick}>
+    <div
+      onClick={handleClick}
+      className="bg-stone-800 grid grid-cols-[30%_70%] gap-2 pt-6 px-4 text-[#e2d7d0] w-[400px] h-[265px] rounded"
+    >
       <LeftSideComponent />
       <RightSideComponent />
-    </StyledApp>
+    </div>
   );
 };
