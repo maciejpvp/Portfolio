@@ -1,3 +1,5 @@
+import { Projects } from "./Projects";
+
 export const RightSideComponent = () => {
   return (
     <div className="flex flex-col text-center gap-1">
@@ -7,8 +9,7 @@ export const RightSideComponent = () => {
         With over 3 years of experience, I build scalable, efficient web
         applications and continuously refine my skills.
       </p>
-
-      <h1>My Favorite Projects</h1>
+      <Projects />
     </div>
   );
 };
