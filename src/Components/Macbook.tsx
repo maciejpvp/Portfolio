@@ -77,11 +77,12 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
             clearInterval(interval);
             return prev;
           }
-          return prev - 0.03;
+          return prev - 0.01;
         });
       }, 1);
     };
     setTimeout(() => {
+      console.log("Teraz");
       openScreen();
     }, 1500);
   }, []);
