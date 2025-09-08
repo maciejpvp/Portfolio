@@ -5,7 +5,7 @@ export const ProfilePicture = () => {
     <img
       src={ghost}
       alt="pfp"
-      className="rounded-full border-1 border-stone-400 scale-90"
+      className="rounded-full border-4 border-stone-400 w-96"
     />
   );
 };

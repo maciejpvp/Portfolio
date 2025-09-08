@@ -97,7 +97,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
       positionZ: { value: -0.02, min: -1, max: 1, step: 0.0001 },
       scale: { value: 0.023, min: 0.01, max: 0.04, step: 0.0001 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
   const htmlDbg = useControls(
     "Html",
@@ -108,7 +108,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
           positionY: { value: -0.06, min: -1, max: 0, step: 0.0001 },
           positionZ: { value: -1.9, min: -10, max: 10, step: 0.0001 },
         },
-        { collapsed: true }
+        { collapsed: true },
       ),
       Rotation: folder(
         {
@@ -116,11 +116,11 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
           rotationY: { value: 0.0, min: 0, max: Math.PI * 2, step: 0.001 },
           rotationZ: { value: 0.0, min: 0, max: Math.PI * 2, step: 0.001 },
         },
-        { collapsed: true }
+        { collapsed: true },
       ),
-      distanceFactor: { value: 1.25, min: 1, max: 10, step: 0.001 },
+      distanceFactor: { value: 0.26, min: 0.26, max: 1, step: 0.001 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   return (

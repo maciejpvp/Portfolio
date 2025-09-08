@@ -38,19 +38,19 @@ export const LeftSideComponent = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center gap-8 pt-24">
+      <div className="flex flex-col items-center justify-center gap-4">
         <ProfilePicture />
-        <p>Hi, I`m Oskar</p>
+        <p className="text-5xl">Hi, I`m Oskar</p>
       </div>
-      <div className="grid grid-cols-2 gap-x-0.5 gap-y-1">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-3">
         {socialButtons.map((btn) => (
           <button
             key={btn.label}
             onClick={() => handleOpenLink(btn.url)}
-            className="bg-stone-900 text-stone-300 cursor-pointer flex items-center gap-1 px-1 py-[1px] rounded hover:bg-[#afafaf] hover:scale-[1.01] transition-all duration-100"
+            className="bg-stone-900 text-stone-300 rounded-md cursor-pointer flex items-center gap-1 p-2 hover:bg-stone-950 hover:scale-[1.05] transition-all duration-100"
           >
-            <span className="text-[8px] flex flex-row items-center gap-1">
+            <span className="text-4xl flex flex-row items-center gap-2">
               {btn.icon}
               {btn.label}
             </span>

@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 
 type Project = {
   label: string;
@@ -35,26 +36,40 @@ const handleOpenLink = (url: string) => {
 
 export const Projects = () => {
   return (
-    <>
-      <h1>My Favorite Projects</h1>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-3xl font-semibold">My Favorite Projects</h1>
       <div className="flex justify-center">
-        <Carousel className="w-[150px]">
+        <Carousel className="text-1xl">
           <CarouselContent>
             {projects.map((item) => (
-              <CarouselItem
-                className="cursor-pointer"
-                onClick={() => handleOpenLink(item.url)}
-              >
-                <img src={item.img} />
-                <h1>{item.label}</h1>
-                <p className="text-[6px]">{item.desc}</p>
+              <CarouselItem className="flex flex-row">
+                <button
+                  className="w-[200px]"
+                  onClick={() => document.getElementById("previous")?.click()}
+                >
+                  <FaLongArrowAltLeft size={100} />
+                </button>
+                <div
+                  className="cursor-pointer gap-1 flex flex-col justify-center items-center"
+                  onClick={() => handleOpenLink(item.url)}
+                >
+                  <img src={item.img} className="rounded-2xl w-[70%]" />
+                  <h1 className="text-3xl font-semibold">{item.label}</h1>
+                  <p className="text-2xl">{item.desc}</p>
+                </div>
+                <button
+                  className="w-[200px]"
+                  onClick={() => document.getElementById("next")?.click()}
+                >
+                  <FaLongArrowAltRight size={100} />
+                </button>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious id="previous" className="hidden" />
+          <CarouselNext id="next" className="hidden" />
         </Carousel>
       </div>
-    </>
+    </div>
   );
 };

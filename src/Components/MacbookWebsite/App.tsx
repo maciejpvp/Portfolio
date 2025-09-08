@@ -13,7 +13,7 @@ export const App = () => {
   return (
     <div
       onClick={handleClick}
-      className="bg-stone-800 grid grid-cols-[30%_70%] gap-2 pt-6 px-4 text-[#e2d7d0] w-[400px] h-[265px] rounded"
+      className="bg-stone-800 grid grid-cols-[30%_70%] gap-2 pt-6 px-4 text-[#e2d7d0] w-[1920px] h-[1200px] rounded"
     >
       <LeftSideComponent />
       <RightSideComponent />
