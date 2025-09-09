@@ -125,9 +125,15 @@ export const Fiber = () => {
           rotation-y={Math.PI}
           rotation-z={Math.PI * -0.5}
         />
-        <Coffee scale={0.0011} />
-        <Coffee scale={0.0011} offset={-0.013} />
-        <Coffee scale={0.0011} offset={-0.026} />
+        <Coffee scale={0.0011} position={[-0.27, 3.19, -0.071]} />
+        <Coffee scale={0.0011} position={[-0.23, 3.19, -0.087]} />
+        <Coffee scale={0.0011} position={[-0.25, 3.19, -0.101]} />
+        <Coffee scale={0.0011} position={[-0.27, 3.19, 0.05]} />
+
+        <Coffee scale={0.0011} position={[-0.21, 3.19, -0.068]} />
+        <Coffee scale={0.0011} position={[-0.27, 3.19, -0.084]} />
+        <Coffee scale={0.0011} position={[-0.27, 3.19, -0.099]} />
+        <Coffee scale={0.0011} position={[-0.24, 3.19, -0.113]} />
         <Gamepad scale={0.1} position={[0.2, 3, 0]} />
         <Headset scale={0.1} position={[0.2, 3, 0]} />
         <Wall />

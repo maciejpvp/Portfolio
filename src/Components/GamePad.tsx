@@ -1,10 +1,10 @@
 import * as THREE from "three";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { meshBounds, useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import useCameraStore from "../Utils/useCameraStore";
-import { ThreeEvent } from "react-three-fiber";
+import { ThreeEvent } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,7 +27,7 @@ type GLTFResult = GLTF & {
 };
 
 export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
-  const { nodes, materials } = useGLTF("/gamepad.glb") as GLTFResult;
+  const { nodes, materials } = useGLTF("/gamepad.glb") as unknown as GLTFResult;
   const [clicked, setClicked] = useState<string | undefined>(undefined);
   const [clickSound] = useState(new Audio("/click.wav"));
   const selectedCamera = useCameraStore((state) => state.selectedCamera);
@@ -47,7 +47,7 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
       }),
       scale: { value: 0.0136, min: 0.01, max: 0.04, step: 0.0001 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   const handleClick = (button: string) => {

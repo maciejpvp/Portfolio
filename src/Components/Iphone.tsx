@@ -1,18 +1,64 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Html, useGLTF } from "@react-three/drei";
-import { ReactThreeFiber, ThreeEvent } from "@react-three/fiber";
+import { ThreeElements, ThreeEvent } from "@react-three/fiber";
 import { folder, useControls } from "leva";
 import * as THREE from "three";
 import useCameraStore from "@/Utils/useCameraStore";
 import { App } from "./IPhoneWebsite/App";
+import { GLTF } from "three-stdlib";
 
-type PrimitiveProps = Omit<
-  ReactThreeFiber.Object3DNode<THREE.Object3D, typeof THREE.Object3D>,
-  "object"
->;
+type PrimitiveProps = Omit<ThreeElements["primitive"], "object">;
+
+type GLTFResult = GLTF & {
+  nodes: {
+    Circle038: THREE.Mesh;
+    Circle038_1: THREE.Mesh;
+    Circle038_2: THREE.Mesh;
+    Circle038_3: THREE.Mesh;
+    Circle038_4: THREE.Mesh;
+    AntennaLineBottom001: THREE.Mesh;
+    AntennaLineTop001: THREE.Mesh;
+    AppleLogo001: THREE.Mesh;
+    BackCameraBottomGreyRing001: THREE.Mesh;
+    BackCameraBottomLens001: THREE.Mesh;
+    BackCameraP1001: THREE.Mesh;
+    BackCameraTopGreyRing001: THREE.Mesh;
+    BackCameraTopLens001: THREE.Mesh;
+    CameraBump001: THREE.Mesh;
+    FlashBG001: THREE.Mesh;
+    FrontCameraContainer001: THREE.Mesh;
+    FrontSpeakerBG001: THREE.Mesh;
+    iPhoneLogo001: THREE.Mesh;
+    MuteSwitch001: THREE.Mesh;
+    Circle032: THREE.Mesh;
+    Circle032_1: THREE.Mesh;
+    Circle031: THREE.Mesh;
+    Circle031_1: THREE.Mesh;
+    SCREEN: THREE.Mesh;
+    VolumeButtons001: THREE.Mesh;
+  };
+  materials: {
+    ["FrameGrey.001"]: THREE.MeshStandardMaterial;
+    ["Front.001"]: THREE.MeshStandardMaterial;
+    ["Antennaline.001"]: THREE.MeshStandardMaterial;
+    ["BackGrey.001"]: THREE.MeshStandardMaterial;
+    ["Rubber.001"]: THREE.MeshStandardMaterial;
+    ["AppleLogo.001"]: THREE.MeshStandardMaterial;
+    ["BackCaneraGrayRIng.002"]: THREE.MeshStandardMaterial;
+    ["Lens.001"]: THREE.MeshStandardMaterial;
+    ["Black.015"]: THREE.MeshStandardMaterial;
+    ["Frame.001"]: THREE.MeshStandardMaterial;
+    ["PinkFlash.002"]: THREE.MeshStandardMaterial;
+    ["FrontCameraBlack.002"]: THREE.MeshStandardMaterial;
+    ["FrontSpeaker.001"]: THREE.MeshStandardMaterial;
+    ["iPhoneLogo.001"]: THREE.MeshStandardMaterial;
+    ["Black.014"]: THREE.MeshStandardMaterial;
+    ["Display.002"]: THREE.MeshStandardMaterial;
+  };
+};
 
 export const IPhone = (props: PrimitiveProps) => {
-  const { nodes, materials } = useGLTF("/iphone.gltf") as any;
+  const { nodes, materials } = useGLTF("/iphone.gltf") as unknown as GLTFResult;
 
   const [showScreen, setShowScreen] = useState<boolean>(false);
 
