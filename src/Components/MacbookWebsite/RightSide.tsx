@@ -1,4 +1,5 @@
 import { Projects } from "./Projects";
+import { TechStack } from "./TechStack";
 
 export const RightSideComponent = () => {
   return (
@@ -16,6 +17,7 @@ export const RightSideComponent = () => {
           </p>
         </div>
         <Projects />
+        <TechStack />
       </div>
     </div>
   );

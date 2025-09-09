@@ -58,7 +58,6 @@ export const Lights = () => {
     0.1,
   );
 
-  const directionalLightSize = 0.01;
   return (
     <>
       <mesh
@@ -71,15 +70,7 @@ export const Lights = () => {
       </mesh>
       <ambientLight intensity={0.2} />
       <directionalLight
-        castShadow={true}
-        shadow-mapSize={[1024, 1024]}
-        shadow-camera-near={0.001}
-        shadow-camera-far={1}
-        shadow-camera-top={directionalLightSize}
-        shadow-camera-right={directionalLightSize}
-        shadow-camera-bottom={-directionalLightSize}
-        shadow-camera-left={-directionalLightSize}
-        shadow-bias={-0.01}
+        castShadow={false}
         ref={directionalLightRef}
         position={[positionX, positionY, positionZ]}
         target-position={[targetPositionX, targetPositionY, targetPositionZ]}
