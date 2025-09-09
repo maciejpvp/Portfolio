@@ -231,18 +231,22 @@ export const IPhone = (props: PrimitiveProps) => {
           material={new THREE.MeshBasicMaterial({ color: "black" })}
           castShadow
           receiveShadow
+        />
+        <Html
+          transform
+          occlude={false}
+          zIndexRange={[0, 1000]}
+          distanceFactor={htmlDbg.distanceFactor}
+          position={[htmlDbg.positionX, htmlDbg.positionY, htmlDbg.positionZ]}
+          rotation={[htmlDbg.rotationX, htmlDbg.rotationY, htmlDbg.rotationZ]}
+          style={{
+            zIndex: "100",
+          }}
         >
-          <Html
-            transform
-            distanceFactor={htmlDbg.distanceFactor}
-            position={[htmlDbg.positionX, htmlDbg.positionY, htmlDbg.positionZ]}
-            rotation={[htmlDbg.rotationX, htmlDbg.rotationY, htmlDbg.rotationZ]}
-          >
-            <div style={{}}>
-              <App />
-            </div>
-          </Html>
-        </mesh>
+          <div style={{ backfaceVisibility: "hidden" }}>
+            <App />
+          </div>
+        </Html>
         <mesh
           geometry={nodes.VolumeButtons001.geometry}
           material={materials["FrameGrey.001"]}

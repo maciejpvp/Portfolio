@@ -1,4 +1,5 @@
 import useCameraStore from "@/Utils/useCameraStore";
+import { Game } from "./Game";
 
 export const App = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
@@ -14,8 +15,8 @@ export const App = () => {
       className="bg-stone-800 text-white flex items-center justify-center relative"
       style={{
         width: "390px",
-        height: "844px",
-        borderRadius: "30px",
+        height: "830px",
+        borderRadius: "60px",
         overflow: "hidden",
       }}
     >
@@ -23,13 +24,14 @@ export const App = () => {
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 bg-black"
         style={{
+          zIndex: "1",
           width: "210px",
           height: "35px",
           borderBottomLeftRadius: "20px",
           borderBottomRightRadius: "20px",
         }}
       />
-      <p className="text-3xl">Iphone</p>
+      <Game />
     </div>
   );
 };
