@@ -9,6 +9,7 @@ import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import { App } from "./MacbookWebsite/App";
 import useCameraStore from "../Utils/useCameraStore";
+import { ObjectMap } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -64,7 +65,7 @@ type GLTFResult = GLTF & {
 };
 
 export function Macbook(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials } = useGLTF("/laptop.gltf") as GLTFResult;
+  const { nodes, materials } = useGLTF("/laptop.gltf") as GLTF & ObjectMap;
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [screenRotation, setScreenRotation] = useState(3.14);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);

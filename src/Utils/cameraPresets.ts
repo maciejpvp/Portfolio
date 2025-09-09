@@ -35,4 +35,13 @@ export const cameraPresets = [
     lookAtY: 3.1,
     lookAtZ: 0.1,
   },
+  {
+    // Iphone
+    positionX: -0.23,
+    positionY: 3.32,
+    positionZ: 0.03,
+    lookAtX: -0.4,
+    lookAtY: 2.0,
+    lookAtZ: 0.029,
+  },
 ];
