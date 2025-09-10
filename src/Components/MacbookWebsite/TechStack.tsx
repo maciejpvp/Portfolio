@@ -89,7 +89,6 @@ export const TechStack: React.FC = () => {
             key={`${tech.name}-${index}`}
             className={`flex flex-col items-center gap-2 text-center p-4 rounded-xl ${tech.width ? tech.width : "min-w-24"} bg-white/10 backdrop-blur-md shadow-lg cursor-pointer`}
             whileHover={{ scale: 1.1, y: -5 }}
-            whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{

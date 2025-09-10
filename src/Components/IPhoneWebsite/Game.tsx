@@ -23,12 +23,12 @@ export const Game: React.FC = () => {
   const resetGame = () => {
     const canvas = canvasRef.current!;
     const pipeWidth = 80;
-    const gap = 250;
+    const gap = 300;
     const pipeCount = 100;
     const newPipes: Pipe[] = [];
 
     for (let i = 0; i < pipeCount; i++) {
-      const holeY = 100 + Math.random() * (canvas.height - 200 - gap);
+      const holeY = 100 + Math.random() * (canvas.height - 150 - gap);
       newPipes.push({
         x: canvas.width + i * gap,
         holeY,
@@ -57,9 +57,9 @@ export const Game: React.FC = () => {
     canvas.height = 840;
 
     const gravity = 1000;
-    const jump = -500;
+    const jump = -400;
     const boxX = 100;
-    const gap = 250;
+    const gap = 200;
 
     const handleClick = () => {
       velocityRef.current = jump;
