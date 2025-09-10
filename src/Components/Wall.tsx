@@ -5,7 +5,10 @@ import useCameraStore from "../Utils/useCameraStore";
 
 export const Wall = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
-  const texture = useLoader(TextureLoader, "/brick.jpg");
+  const texture = useLoader(
+    TextureLoader,
+    `${import.meta.env.BASE_URL}/brick.jpg`,
+  );
 
   texture.wrapS = texture.wrapT = RepeatWrapping;
   texture.repeat.set(5, 4);

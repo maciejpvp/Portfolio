@@ -8,7 +8,7 @@ import useCameraStore from "../Utils/useCameraStore";
 type PrimitiveProps = Omit<ThreeElements["primitive"], "object">;
 
 export const Desk = (props: PrimitiveProps) => {
-  const { scene } = useGLTF("./desk.gltf");
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}/desk.gltf`);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
 
   const { position, roughness, metalness } = useControls(
@@ -21,7 +21,10 @@ export const Desk = (props: PrimitiveProps) => {
     { collapsed: true },
   );
 
-  const texture = useLoader(THREE.TextureLoader, "/Desk/desk.jpg");
+  const texture = useLoader(
+    THREE.TextureLoader,
+    `${import.meta.env.BASE_URL}/Desk/desk.jpg`,
+  );
 
   scene.traverse((child) => {
     if ((child as THREE.Mesh).isMesh) {

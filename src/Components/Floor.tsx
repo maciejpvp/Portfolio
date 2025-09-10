@@ -5,7 +5,10 @@ import useCameraStore from "../Utils/useCameraStore";
 
 export const Floor = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
-  const texture = useLoader(TextureLoader, "/floor.jpg");
+  const texture = useLoader(
+    TextureLoader,
+    `${import.meta.env.BASE_URL}/floor.jpg`,
+  );
 
   texture.wrapS = texture.wrapT = RepeatWrapping;
   texture.repeat.set(5, 4);
@@ -18,7 +21,7 @@ export const Floor = () => {
       positionZ: { value: -0.0139, min: -1, max: 1, step: 0.001 },
       rotationY: { value: Math.PI * 0.5, min: 0, max: Math.PI, step: 0.001 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   return (
