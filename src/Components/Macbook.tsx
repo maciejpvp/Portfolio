@@ -9,6 +9,7 @@ import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import { App } from "./MacbookWebsite/App";
 import useCameraStore from "../Utils/useCameraStore";
+import { useFrame, useThree } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -70,28 +71,41 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [screenRotation, setScreenRotation] = useState(3.14);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
+  const { camera } = useThree();
+  const [screenRotationStarted, setScreenRotationStarted] = useState(false);
+  const EPS = 0.001; // tolerance
 
-  useEffect(() => {
-    const openScreen = () => {
-      const interval = setInterval(() => {
-        setScreenRotation((prev) => {
-          if (prev <= 1.6) {
-            clearInterval(interval);
-            return prev;
-          }
-          return prev - 0.01;
-        });
-      }, 1);
-    };
-    setTimeout(() => {
-      console.log("Teraz");
+  const openScreen = () => {
+    const interval = setInterval(() => {
+      setScreenRotation((prev) => {
+        if (prev <= 1.6) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev - 0.01;
+      });
+    }, 1);
+  };
+
+  useFrame(() => {
+    const { x, y, z } = camera.position;
+
+    const isReady =
+      Math.abs(x + 0.058) < EPS &&
+      Math.abs(y - 3.25) < EPS &&
+      Math.abs(z + 0.02) < EPS;
+
+    if (isReady && !screenRotationStarted) {
+      setScreenRotationStarted(true); // local state to prevent multiple triggers
       openScreen();
-    }, 1500);
-  }, []);
+    }
+  });
 
   useEffect(() => {
-    setShowScreen(true);
-  }, [showScreen]);
+    if (screenRotation < 2.5) {
+      setShowScreen(true);
+    }
+  }, [screenRotation]);
   const { positionX, positionY, positionZ, scale } = useControls(
     "Macbook",
     {

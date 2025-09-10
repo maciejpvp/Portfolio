@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist -r https://github.com/maciejpvp/Portfolio.git"
   },
   "dependencies": {
+    "@isaac_ua/drei-html-fix": "^1.0.2",
     "@radix-ui/react-slot": "^1.2.3",
     "@react-three/drei": "^10.7.4",
     "@react-three/fiber": "^9.3.0",

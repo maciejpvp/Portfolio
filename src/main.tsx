@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import "./index.css";
 import "./reset.css";
 import { App } from "./App.tsx";
+import { Leva } from "leva";
 
 const Intro = ({ onFinish }: { onFinish: () => void }) => {
   useEffect(() => {
@@ -48,5 +49,6 @@ const RootApp = () => {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RootApp />
+    <Leva />
   </StrictMode>,
 );
