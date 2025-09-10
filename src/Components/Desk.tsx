@@ -1,14 +1,11 @@
 import { meshBounds, useGLTF } from "@react-three/drei";
-import { ReactThreeFiber, ThreeEvent, useLoader } from "@react-three/fiber";
+import { ThreeElements, ThreeEvent, useLoader } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
 import * as THREE from "three";
 import useCameraStore from "../Utils/useCameraStore";
 
-type PrimitiveProps = Omit<
-  ReactThreeFiber.Object3DNode<THREE.Object3D, typeof THREE.Object3D>,
-  "object"
->;
+type PrimitiveProps = Omit<ThreeElements["primitive"], "object">;
 
 export const Desk = (props: PrimitiveProps) => {
   const { scene } = useGLTF("./desk.gltf");

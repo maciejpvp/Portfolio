@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
+import { JSX } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -19,7 +20,9 @@ type GLTFResult = GLTF & {
 };
 
 export const HeadsetStand = (props: JSX.IntrinsicElements["group"]) => {
-  const { nodes, materials } = useGLTF("/HeadphoneStand.glb") as GLTFResult;
+  const { nodes, materials } = useGLTF(
+    "/HeadphoneStand.glb",
+  ) as unknown as GLTFResult;
   const headsetDebug = useControls("Headset Stand", {
     Position: folder({
       positionX: { value: -0.23, min: -0.4, max: -0.2, step: 0.001 },

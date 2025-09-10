@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import useCameraStore from "../Utils/useCameraStore";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -31,7 +31,9 @@ export const Headset = (props: JSX.IntrinsicElements["group"]) => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
   const selectedCamera = useCameraStore((state) => state.selectedCamera);
 
-  const { nodes, materials } = useGLTF("/headset.gltf") as GLTFResult;
+  const { nodes, materials } = useGLTF(
+    "/headset.gltf",
+  ) as unknown as GLTFResult;
   const headsetDebug = useControls("Headset", {
     Position: folder({
       positionX: { value: -0.24, min: -0.4, max: -0.2, step: 0.001 },
