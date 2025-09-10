@@ -13,12 +13,12 @@ export const Wall = () => {
   const { positionX, positionY, positionZ, rotationY } = useControls(
     "Wall",
     {
-      positionX: { value: -0.3, min: -1, max: 1, step: 0.001 },
+      positionX: { value: -0.293, min: -1, max: 1, step: 0.001 },
       positionY: { value: 3.193, min: 3, max: 4, step: 0.00001 },
       positionZ: { value: -0.0139, min: -1, max: 1, step: 0.001 },
       rotationY: { value: Math.PI * 0.5, min: 0, max: Math.PI, step: 0.001 },
     },
-    { collapsed: true }
+    { collapsed: true },
   );
 
   return (
