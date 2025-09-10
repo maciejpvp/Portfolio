@@ -48,7 +48,7 @@ export const LeftSideComponent = () => {
           <button
             key={btn.label}
             onClick={() => handleOpenLink(btn.url)}
-            className="bg-stone-900 text-stone-300 rounded-md cursor-pointer flex items-center gap-1 p-2 hover:bg-stone-950 hover:scale-[1.05] transition-all duration-100"
+            className="bg-stone-950 text-stone-300 rounded-md cursor-pointer flex items-center gap-1 p-2 hover:bg-stone-950 hover:scale-[1.05] transition-all duration-100"
           >
             <span className="text-4xl flex flex-row items-center gap-2">
               {btn.icon}

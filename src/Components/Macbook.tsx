@@ -9,7 +9,6 @@ import { GLTF } from "three-stdlib";
 import { folder, useControls } from "leva";
 import { App } from "./MacbookWebsite/App";
 import useCameraStore from "../Utils/useCameraStore";
-import { useFrame, useThree } from "@react-three/fiber";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -71,35 +70,37 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [screenRotation, setScreenRotation] = useState(3.14);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
-  const { camera } = useThree();
-  const [screenRotationStarted, setScreenRotationStarted] = useState(false);
-  const EPS = 0.001; // tolerance
 
-  const openScreen = () => {
-    const interval = setInterval(() => {
-      setScreenRotation((prev) => {
-        if (prev <= 1.6) {
-          clearInterval(interval);
-          return prev;
+  useEffect(() => {
+    const openScreen = () => {
+      let start: number | null = null;
+      const duration: number = 1300;
+      const startValue: number = screenRotation;
+      const endValue: number = 1.6;
+
+      const easeInOut = (t: number): number => t * t * (3 - 2 * t);
+
+      const animate = (timestamp: number) => {
+        if (start === null) start = timestamp;
+        const elapsed: number = timestamp - start;
+        const progress: number = Math.min(elapsed / duration, 1);
+        const eased: number = easeInOut(progress);
+
+        setScreenRotation(startValue + (endValue - startValue) * eased);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
         }
-        return prev - 0.01;
-      });
-    }, 1);
-  };
+      };
 
-  useFrame(() => {
-    const { x, y, z } = camera.position;
+      requestAnimationFrame(animate);
+    };
 
-    const isReady =
-      Math.abs(x + 0.058) < EPS &&
-      Math.abs(y - 3.25) < EPS &&
-      Math.abs(z + 0.02) < EPS;
-
-    if (isReady && !screenRotationStarted) {
-      setScreenRotationStarted(true); // local state to prevent multiple triggers
+    setTimeout(() => {
+      console.log("Teraz");
       openScreen();
-    }
-  });
+    }, 1500);
+  }, []);
 
   useEffect(() => {
     if (screenRotation < 2.5) {
@@ -337,7 +338,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
               <Html
                 transform
                 occlude
-                distanceFactor={htmlDbg.distanceFactor}
+                scale={0.105}
                 position={[
                   htmlDbg.positionX,
                   htmlDbg.positionY,
@@ -349,7 +350,7 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
                   htmlDbg.rotationZ,
                 ]}
               >
-                <div style={{ transform: "scale(4)" }}>
+                <div>
                   <App />
                 </div>
               </Html>

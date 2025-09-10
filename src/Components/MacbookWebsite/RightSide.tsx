@@ -7,7 +7,7 @@ export const RightSideComponent = () => {
       <div className="h-full flex flex-col gap-10">
         <div className="flex flex-col gap-4 items-center">
           <h1 className="text-4xl">About Me</h1>
-          <p className="text-3xl text-center bg-stone-900 p-2 mt-1 rounded-md w-[85%]">
+          <p className="text-3xl text-center bg-stone-950 p-5 mt-1 rounded-lg w-[85%]">
             I am a full-stack developer specializing in
             <span className="font-semibold"> JavaScript</span> and
             <span className="font-semibold"> TypeScript</span>. With over

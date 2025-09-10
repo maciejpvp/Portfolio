@@ -1,7 +1,7 @@
 import { useThree, useFrame } from "@react-three/fiber";
 import { button, useControls } from "leva";
 import { Desk } from "./Components/Desk";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Macbook } from "./Components/Macbook";
 import { Mesh } from "three";
 import { Lights } from "./Components/Lights";
@@ -103,6 +103,10 @@ export const Fiber = () => {
 
     camera.lookAt(lookAtMeshRef.current.position);
   });
+
+  useEffect(() => {
+    lookAtMeshRef.current.position.set(-0.4, 3.18, -0.02);
+  }, []);
 
   return (
     <>
