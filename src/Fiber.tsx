@@ -15,6 +15,7 @@ import { Headset } from "./Components/Headset.tsx";
 import { Wall } from "./Components/Wall.tsx";
 import { IPhone } from "./Components/Iphone.tsx";
 import { Floor } from "./Components/Floor.tsx";
+import { EffectComposer, SMAA, Vignette } from "@react-three/postprocessing";
 
 export const Fiber = () => {
   const three = useThree();
@@ -110,6 +111,10 @@ export const Fiber = () => {
 
   return (
     <>
+      <EffectComposer>
+        <Vignette eskil={false} offset={0.2} darkness={0.7} />
+        <SMAA />
+      </EffectComposer>
       {/* <color attach="background" args={["#262626"]} /> */}
       <Lights />
       <mesh ref={lookAtMeshRef} scale={targetVisible ? 0.03 : 0}>
