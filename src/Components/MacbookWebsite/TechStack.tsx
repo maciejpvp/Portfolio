@@ -8,7 +8,7 @@ import {
   SiNextdotjs,
   SiMongodb,
   SiExpress,
-  SiAwsamplify,
+  SiAwslambda,
   SiSqlite,
   SiDocker,
   SiFramer,
@@ -18,11 +18,17 @@ type Tech = {
   name: string;
   icon: React.ReactNode;
   color?: string;
+  width?: string;
 };
 
 const techStack: Tech[] = [
   { name: "React", icon: <FaReact />, color: "#61DBFB" },
-  { name: "React Three Fiber", icon: <SiFramer />, color: "#61DBFB" },
+  {
+    name: "React Three Fiber",
+    icon: <SiFramer />,
+    color: "#61DBFB",
+    width: "w-36",
+  },
   { name: "Next.js", icon: <SiNextdotjs />, color: "#000000" },
   { name: "TypeScript", icon: <SiTypescript />, color: "#3178C6" },
   { name: "Node.js", icon: <FaNodeJs />, color: "#68A063" },
@@ -30,11 +36,16 @@ const techStack: Tech[] = [
   { name: "Tailwind CSS", icon: <SiTailwindcss />, color: "#38B2AC" },
   { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" },
   { name: "SQLite", icon: <SiSqlite />, color: "#003B57" },
-  { name: "AWS CDK", icon: <SiAwsamplify />, color: "#FF9900" },
+  { name: "AWS CDK", icon: <SiAwslambda />, color: "#FF9900" },
   { name: "Docker", icon: <SiDocker />, color: "#2496ED" },
   { name: "Git", icon: <FaGit />, color: "#F05032" },
   { name: "Socket.IO", icon: <GiElectric />, color: "#FFAA00" },
-  { name: "Framer Motion", icon: <SiFramer />, color: "#0055FF" },
+  {
+    name: "Framer Motion",
+    icon: <SiFramer />,
+    color: "#0055FF",
+    width: "w-29",
+  },
 ];
 
 export const TechStack: React.FC = () => {
@@ -65,18 +76,18 @@ export const TechStack: React.FC = () => {
   const duplicatedTechStack = [...techStack, ...techStack];
 
   return (
-    <div className="flex flex-col items-center justify-center w-full gap-4">
+    <div className="flex flex-col items-center justify-center w-full gap-1">
       <h1 className="text-5xl mb-4">Tech</h1>
       <div
         ref={containerRef}
-        className="flex gap-6 overflow-hidden whitespace-nowrap w-full px-4"
+        className="flex gap-6 overflow-hidden whitespace-nowrap w-full px-4 pt-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
         {duplicatedTechStack.map((tech, index) => (
           <motion.div
             key={`${tech.name}-${index}`}
-            className="flex flex-col items-center gap-2 text-center p-4 rounded-xl bg-white/10 backdrop-blur-md shadow-lg cursor-pointer"
+            className={`flex flex-col items-center gap-2 text-center p-4 rounded-xl ${tech.width ? tech.width : "min-w-24"} bg-white/10 backdrop-blur-md shadow-lg cursor-pointer`}
             whileHover={{ scale: 1.1, y: -5 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
@@ -84,10 +95,10 @@ export const TechStack: React.FC = () => {
             transition={{
               delay: (index % techStack.length) * 0.05,
               type: "spring",
-              stiffness: 120,
+              stiffness: 300,
             }}
           >
-            <div style={{ color: tech.color, fontSize: "2.5rem" }}>
+            <div style={{ color: tech.color, fontSize: "3rem" }}>
               {tech.icon}
             </div>
             <span className="text-sm font-semibold text-white">
