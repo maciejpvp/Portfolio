@@ -16,6 +16,7 @@ import { Wall } from "./Components/Wall.tsx";
 import { IPhone } from "./Components/Iphone.tsx";
 import { Floor } from "./Components/Floor.tsx";
 import { EffectComposer, SMAA, Vignette } from "@react-three/postprocessing";
+import Neon from "./Components/Neon.tsx";
 
 export const Fiber = () => {
   const three = useThree();
@@ -117,6 +118,14 @@ export const Fiber = () => {
       </EffectComposer>
       {/* <color attach="background" args={["#262626"]} /> */}
       <Lights />
+      <Neon
+        text="oskar"
+        position={[-0.287, 3.25, -0.02]}
+        rotation={[0, Math.PI / 2, 0]}
+        color="#ff00ff"
+        intensity={8}
+        size={0.03}
+      />
       <mesh ref={lookAtMeshRef} scale={targetVisible ? 0.03 : 0}>
         <meshBasicMaterial color={"red"} />
         <boxGeometry />
