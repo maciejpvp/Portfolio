@@ -15,7 +15,12 @@ import { Headset } from "./Components/Headset.tsx";
 import { Wall } from "./Components/Wall.tsx";
 import { IPhone } from "./Components/Iphone.tsx";
 import { Floor } from "./Components/Floor.tsx";
-import { EffectComposer, SMAA, Vignette } from "@react-three/postprocessing";
+import {
+  Bloom,
+  EffectComposer,
+  SMAA,
+  Vignette,
+} from "@react-three/postprocessing";
 import Neon from "./Components/Neon.tsx";
 
 export const Fiber = () => {
@@ -114,17 +119,24 @@ export const Fiber = () => {
     <>
       <EffectComposer>
         <Vignette eskil={false} offset={0.2} darkness={0.7} />
+        <Bloom
+          luminanceThreshold={0.3} // Only brightest parts bloom
+          luminanceSmoothing={0.8} // Smooth transition
+          intensity={0.9} // Moderate strength
+          kernelSize={1} // Small blur kernel = low cost
+          height={300} // Lower resolution for bloom = better performance
+        />
         <SMAA />
       </EffectComposer>
       {/* <color attach="background" args={["#262626"]} /> */}
       <Lights />
       <Neon
-        text="oskar"
+        text="bg-pink-300"
         position={[-0.287, 3.25, -0.02]}
         rotation={[0, Math.PI / 2, 0]}
         color="#ff00ff"
-        intensity={8}
-        size={0.03}
+        intensity={7}
+        size={0.023}
       />
       <mesh ref={lookAtMeshRef} scale={targetVisible ? 0.03 : 0}>
         <meshBasicMaterial color={"red"} />

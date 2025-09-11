@@ -97,9 +97,9 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
     };
 
     setTimeout(() => {
-      console.log("Teraz");
       openScreen();
     }, 1500);
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
