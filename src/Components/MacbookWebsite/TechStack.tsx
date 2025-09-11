@@ -48,7 +48,7 @@ const techStack: Tech[] = [
   },
 ];
 
-export const TechStack: React.FC = () => {
+export const TechStack = ({ ios = false }: { ios?: boolean }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -77,7 +77,7 @@ export const TechStack: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center w-full gap-1">
-      <h1 className="text-5xl mb-4">Tech</h1>
+      <h1 className={`${ios ? "text-2xl" : "text-5xl"} mb-4`}>Tech</h1>
       <div
         ref={containerRef}
         className="flex gap-6 overflow-hidden whitespace-nowrap w-full px-4 pt-4 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"

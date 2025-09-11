@@ -33,33 +33,43 @@ const handleOpenLink = (url: string) => {
   window.open(url, "_blank", "noopener,noreferrer");
 };
 
-export const Projects = () => {
+export const Projects = ({ ios = false }: { ios?: boolean }) => {
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-3xl font-semibold">My Favorite Projects</h1>
-      <div className="flex justify-center">
-        <Carousel className="text-1xl">
+    <div className="flex flex-col gap-4 items-center">
+      <h1 className={`${ios ? "text-sm" : "text-3xl"} font-semibold`}>
+        My Favorite Projects
+      </h1>
+      <div className="flex justify-center w-[90%]">
+        <Carousel className="w-[80%] flex flex-col  justify-center items-center">
           <CarouselContent>
             {projects.map((item) => (
-              <CarouselItem className="flex flex-row w-[500px]">
+              <CarouselItem
+                className={`flex flex-row ${!ios ? "w-[500px]" : "w-[50dvw]"}`}
+              >
                 <div
                   className="cursor-pointer gap-1 flex flex-col justify-center items-center"
                   onClick={() => handleOpenLink(item.url)}
                 >
                   <img src={item.img} className="rounded-2xl w-[70%]" />
-                  <h1 className="text-3xl font-semibold pt-6">{item.label}</h1>
-                  <p className="text-2xl">{item.desc}</p>
+                  <h1
+                    className={`${ios ? "text-sm" : "text-3xl"} font-semibold pt-6`}
+                  >
+                    {item.label}
+                  </h1>
+                  <p className={`${ios ? "text-xs" : "text-2xl"}`}>
+                    {item.desc}
+                  </p>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
           <CarouselPrevious
             id="previous"
-            className="bg-stone-900 text-stone-100 w-[50px] h-[50px]"
+            className={`bg-stone-900 text-stone-100 ${ios ? "" : "w-[50px] h-[50px]"}`}
           />
           <CarouselNext
             id="next"
-            className="bg-stone-900 text-stone-100 w-[50px] h-[50px]"
+            className={`bg-stone-900 text-stone-100 ${ios ? "" : "w-[50px] h-[50px]"}`}
           />
         </Carousel>
       </div>

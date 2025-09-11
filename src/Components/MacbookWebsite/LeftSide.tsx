@@ -2,7 +2,7 @@ import { ProfilePicture } from "./ProfilePicture";
 import { FaGithub, FaTelegram, FaLinkedin } from "react-icons/fa";
 import { FaSignalMessenger } from "react-icons/fa6";
 
-type SocialButtonType = {
+export type SocialButtonType = {
   icon: React.ReactNode;
   label: string;
   url: string;

@@ -4,11 +4,11 @@ import useCameraStore from "../../Utils/useCameraStore";
 import { LeftSideComponent } from "./LeftSide";
 import { RightSideComponent } from "./RightSide";
 
-export const App = () => {
+export const App = ({ ios = false }: { ios?: boolean }) => {
   const [text, setText] = useState("");
   const [index, setIndex] = useState(0);
   const fullText = "> Open Portfolio...";
-  const [waiting, setWaiting] = useState(false);
+  const [waiting, setWaiting] = useState(ios);
   const [deleting, setDeleting] = useState(false);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
 
@@ -89,3 +89,5 @@ export const App = () => {
     </div>
   );
 };
+
+export default App;
