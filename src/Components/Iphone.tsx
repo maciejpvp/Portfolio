@@ -83,7 +83,7 @@ export const IPhone = (props: PrimitiveProps) => {
       Position: folder(
         {
           positionX: { value: 0.175, min: -10, max: 10, step: 0.0001 },
-          positionY: { value: -0.24, min: -1, max: 0, step: 0.0001 },
+          positionY: { value: -0.24, min: -1.015, max: 0, step: 0.0001 },
           positionZ: { value: 0.09, min: -10, max: 10, step: 0.0001 },
         },
         { collapsed: true },
@@ -282,9 +282,9 @@ export const IPhone = (props: PrimitiveProps) => {
         />
         <Html
           transform
+          scale={0.155}
           occlude={false}
           zIndexRange={[0, 1000]}
-          distanceFactor={htmlDbg.distanceFactor}
           position={[htmlDbg.positionX, htmlDbg.positionY, htmlDbg.positionZ]}
           rotation={[htmlDbg.rotationX, htmlDbg.rotationY, htmlDbg.rotationZ]}
           style={{

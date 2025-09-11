@@ -58,6 +58,8 @@ export const Lights = () => {
     0.1,
   );
 
+  const lightColor = "#ffddcc";
+
   return (
     <>
       <mesh
@@ -68,13 +70,14 @@ export const Lights = () => {
         <meshBasicMaterial color={"blue"} />
         <boxGeometry />
       </mesh>
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.2} color={lightColor} />
       <directionalLight
         castShadow={false}
         ref={directionalLightRef}
         position={[positionX, positionY, positionZ]}
         target-position={[targetPositionX, targetPositionY, targetPositionZ]}
-        intensity={2}
+        intensity={2.2}
+        color={lightColor}
       />
     </>
   );
