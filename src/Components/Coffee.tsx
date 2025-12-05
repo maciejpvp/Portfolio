@@ -13,11 +13,11 @@ export function Coffee({
   position: [number, number, number];
 }) {
   const coffeeRef = useRef<RapierRigidBody>(null!);
-  const { nodes } = useGLTF(`${import.meta.env.BASE_URL}/coffee.glb`) as GLTF &
+  const { nodes } = useGLTF(`/coffee.glb`) as GLTF &
     ObjectMap;
-  const texture = useTexture(`${import.meta.env.BASE_URL}/coffee.jpg`);
+  const texture = useTexture(`/coffee.jpg`);
   const textureNormal = useTexture(
-    `${import.meta.env.BASE_URL}/coffeeNormal.jpg`,
+    `/coffeeNormal.jpg`,
   );
   texture.flipY = false;
 
@@ -84,4 +84,4 @@ export function Coffee({
   );
 }
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/coffee.glb`);
+useGLTF.preload(`/coffee.glb`);

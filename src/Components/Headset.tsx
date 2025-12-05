@@ -24,7 +24,7 @@ type GLTFResult = GLTF & {
   };
 };
 
-const lofiAudio = new Audio(`${import.meta.env.BASE_URL}/lofi.wav`);
+const lofiAudio = new Audio(`/lofi.wav`);
 lofiAudio.loop = true;
 
 export const Headset = (props: JSX.IntrinsicElements["group"]) => {
@@ -32,7 +32,7 @@ export const Headset = (props: JSX.IntrinsicElements["group"]) => {
   const selectedCamera = useCameraStore((state) => state.selectedCamera);
 
   const { nodes, materials } = useGLTF(
-    `${import.meta.env.BASE_URL}/headset.gltf`,
+    `/headset.gltf`,
   ) as unknown as GLTFResult;
   const headsetDebug = useControls("Headset", {
     Position: folder({
@@ -125,4 +125,4 @@ export const Headset = (props: JSX.IntrinsicElements["group"]) => {
   );
 };
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/headset.gltf`);
+useGLTF.preload(`/headset.gltf`);

@@ -28,11 +28,11 @@ type GLTFResult = GLTF & {
 
 export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
   const { nodes, materials } = useGLTF(
-    `${import.meta.env.BASE_URL}/gamepad.glb`,
+    `/gamepad.glb`,
   ) as unknown as GLTFResult;
   const [clicked, setClicked] = useState<string | undefined>(undefined);
   const [clickSound] = useState(
-    new Audio(`${import.meta.env.BASE_URL}/click.wav`),
+    new Audio(`/click.wav`),
   );
   const selectedCamera = useCameraStore((state) => state.selectedCamera);
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
@@ -165,4 +165,4 @@ export const Gamepad = (props: JSX.IntrinsicElements["group"]) => {
   );
 };
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/gamepad.glb`);
+useGLTF.preload(`/gamepad.glb`);

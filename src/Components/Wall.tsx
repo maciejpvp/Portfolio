@@ -7,7 +7,7 @@ export const Wall = () => {
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
   const texture = useLoader(
     TextureLoader,
-    `${import.meta.env.BASE_URL}/brick.jpg`,
+    `/brick.jpg`,
   );
 
   texture.wrapS = texture.wrapT = RepeatWrapping;

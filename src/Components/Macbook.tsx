@@ -65,7 +65,7 @@ type GLTFResult = GLTF & {
 
 export function Macbook(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(
-    `${import.meta.env.BASE_URL}/laptop.gltf`,
+    `/laptop.gltf`,
   ) as unknown as GLTFResult;
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [screenRotation, setScreenRotation] = useState(3.14);
@@ -371,4 +371,4 @@ export function Macbook(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/laptop.gltf`);
+useGLTF.preload(`/laptop.gltf`);

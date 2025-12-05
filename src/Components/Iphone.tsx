@@ -59,7 +59,7 @@ type GLTFResult = GLTF & {
 
 export const IPhone = (props: PrimitiveProps) => {
   const { nodes, materials } = useGLTF(
-    `${import.meta.env.BASE_URL}/iphone.gltf`,
+    `/iphone.gltf`,
   ) as unknown as GLTFResult;
 
   const [showScreen, setShowScreen] = useState<boolean>(false);
@@ -307,4 +307,4 @@ export const IPhone = (props: PrimitiveProps) => {
   );
 };
 
-useGLTF.preload(`${import.meta.env.BASE_URL}/iphone.gltf`);
+useGLTF.preload(`/iphone.gltf`);

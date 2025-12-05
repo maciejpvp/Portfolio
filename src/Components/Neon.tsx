@@ -56,21 +56,21 @@ const Neon: React.FC<NeonProps> = ({
             intensity *
             (SHORT_FLICKER_INTENSITY_MIN +
               Math.random() *
-                (SHORT_FLICKER_INTENSITY_MAX - SHORT_FLICKER_INTENSITY_MIN));
+              (SHORT_FLICKER_INTENSITY_MAX - SHORT_FLICKER_INTENSITY_MIN));
           flicker.nextFlicker =
             SHORT_FLICKER_DURATION_MIN +
             Math.random() *
-              (SHORT_FLICKER_DURATION_MAX - SHORT_FLICKER_DURATION_MIN);
+            (SHORT_FLICKER_DURATION_MAX - SHORT_FLICKER_DURATION_MIN);
         } else {
           flicker.targetIntensity =
             intensity *
             (LONG_FLICKER_INTENSITY_MIN +
               Math.random() *
-                (LONG_FLICKER_INTENSITY_MAX - LONG_FLICKER_INTENSITY_MIN));
+              (LONG_FLICKER_INTENSITY_MAX - LONG_FLICKER_INTENSITY_MIN));
           flicker.nextFlicker =
             LONG_FLICKER_DURATION_MIN +
             Math.random() *
-              (LONG_FLICKER_DURATION_MAX - LONG_FLICKER_DURATION_MAX);
+            (LONG_FLICKER_DURATION_MAX - LONG_FLICKER_DURATION_MAX);
         }
       } else {
         flicker.targetIntensity = intensity; // No flicker
@@ -108,7 +108,7 @@ const Neon: React.FC<NeonProps> = ({
         fontSize={size}
         anchorX="center"
         anchorY="middle"
-        font={`${import.meta.env.BASE_URL}/fonts/Neon.otf`}
+        font={`/fonts/Neon.otf`}
       >
         {text}
         <meshStandardMaterial
