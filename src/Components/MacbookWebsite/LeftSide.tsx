@@ -18,7 +18,7 @@ export const LeftSideComponent = () => {
     {
       icon: <FaLinkedin />,
       label: "LinkedIn",
-      url: "https://github.com/maciejpvp",
+      url: "https://www.linkedin.com/in/oskar-pyrzak-b3310235a/",
     },
     {
       icon: <FaTelegram />,

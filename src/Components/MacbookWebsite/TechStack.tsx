@@ -12,6 +12,7 @@ import {
   SiSqlite,
   SiDocker,
   SiFramer,
+  SiTerraform,
 } from "react-icons/si";
 
 type Tech = {
@@ -45,6 +46,11 @@ const techStack: Tech[] = [
     icon: <SiFramer />,
     color: "#0055FF",
     width: "w-29",
+  },
+  {
+    name: "Terraform",
+    icon: <SiTerraform />,  
+    color: "#7740B6",
   },
 ];
 
