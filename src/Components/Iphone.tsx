@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 import { Html, useGLTF } from "@react-three/drei";
 import { ThreeElements, ThreeEvent } from "@react-three/fiber";
-import { folder, useControls } from "leva";
+import { useControls } from "leva";
 import * as THREE from "three";
 import useCameraStore from "@/Utils/useCameraStore";
 import { App } from "./IPhoneWebsite/App";
 import { GLTF } from "three-stdlib";
+import { ScreenSurface } from "./ScreenSurface";
+import { fitScreen } from "../Utils/screenFit";
 
 type PrimitiveProps = Omit<ThreeElements["primitive"], "object">;
+
+/** See the matching note in Macbook.tsx — this box is the screen's effective resolution. */
+const SCREEN_BOX_WIDTH = 390;
+
+const SCREEN_MATERIAL = new THREE.MeshBasicMaterial({ color: "black" });
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -62,8 +69,6 @@ export const IPhone = (props: PrimitiveProps) => {
     `/iphone.gltf`,
   ) as unknown as GLTFResult;
 
-  const [showScreen, setShowScreen] = useState<boolean>(false);
-
   const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
 
   const { positionX, positionY, positionZ, scale } = useControls(
@@ -77,33 +82,30 @@ export const IPhone = (props: PrimitiveProps) => {
     { collapsed: true },
   );
 
+  // Placement derived from the SCREEN mesh, not from tuned constants.
+  const screenGeometry = nodes.SCREEN.geometry;
+  const screenFit = useMemo(
+    () =>
+      fitScreen(screenGeometry, {
+        boxWidth: SCREEN_BOX_WIDTH,
+        widthAxis: "x",
+        heightAxis: "y",
+        normalAxis: "z",
+        normalOffset: 0.002,
+      }),
+    [screenGeometry],
+  );
+
   const htmlDbg = useControls(
     "HtmlIphone",
     {
-      Position: folder(
-        {
-          positionX: { value: 0.175, min: -10, max: 10, step: 0.0001 },
-          positionY: { value: -0.24, min: -1.015, max: 0, step: 0.0001 },
-          positionZ: { value: 0.09, min: -10, max: 10, step: 0.0001 },
-        },
-        { collapsed: true },
-      ),
-      Rotation: folder(
-        {
-          rotationX: { value: 0, min: 0, max: Math.PI * 2, step: 0.001 },
-          rotationY: { value: 0.0, min: 0, max: Math.PI * 2, step: 0.001 },
-          rotationZ: { value: 0.0, min: 0, max: Math.PI * 2, step: 0.001 },
-        },
-        { collapsed: true },
-      ),
-      distanceFactor: { value: 1.56, min: 1, max: 2, step: 0.001 },
+      offsetX: { value: 0, min: -0.5, max: 0.5, step: 0.0001 },
+      offsetY: { value: 0, min: -0.5, max: 0.5, step: 0.0001 },
+      offsetZ: { value: 0, min: -0.5, max: 0.5, step: 0.0001 },
+      scaleMultiplier: { value: 1, min: 0.8, max: 1.2, step: 0.001 },
     },
     { collapsed: true },
   );
-
-  useEffect(() => {
-    setShowScreen(true);
-  }, [showScreen]);
 
   return (
     <group
@@ -276,25 +278,30 @@ export const IPhone = (props: PrimitiveProps) => {
         </group>
         <mesh
           geometry={nodes.SCREEN.geometry}
-          material={new THREE.MeshBasicMaterial({ color: "black" })}
+          material={SCREEN_MATERIAL}
           castShadow
           receiveShadow
-        />
-        <Html
-          transform
-          scale={0.155}
-          occlude={false}
-          zIndexRange={[0, 1000]}
-          position={[htmlDbg.positionX, htmlDbg.positionY, htmlDbg.positionZ]}
-          rotation={[htmlDbg.rotationX, htmlDbg.rotationY, htmlDbg.rotationZ]}
-          style={{
-            zIndex: "100",
-          }}
         >
-          <div style={{ backfaceVisibility: "hidden" }}>
-            <App />
-          </div>
-        </Html>
+          <Html
+            transform
+            wrapperClass="r3f-screen"
+            scale={screenFit.scale * htmlDbg.scaleMultiplier}
+            position={[
+              screenFit.position[0] + htmlDbg.offsetX,
+              screenFit.position[1] + htmlDbg.offsetY,
+              screenFit.position[2] + htmlDbg.offsetZ,
+            ]}
+          >
+            <div style={{ backfaceVisibility: "hidden" }}>
+              <ScreenSurface
+                boxWidth={SCREEN_BOX_WIDTH}
+                boxHeight={screenFit.boxHeight}
+              >
+                <App />
+              </ScreenSurface>
+            </div>
+          </Html>
+        </mesh>
         <mesh
           geometry={nodes.VolumeButtons001.geometry}
           material={materials["FrameGrey.001"]}

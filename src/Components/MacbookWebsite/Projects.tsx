@@ -44,6 +44,7 @@ export const Projects = ({ ios = false }: { ios?: boolean }) => {
           <CarouselContent>
             {projects.map((item) => (
               <CarouselItem
+                key={item.label}
                 className={`flex flex-row ${!ios ? "w-[500px]" : "w-[50dvw]"}`}
               >
                 <div

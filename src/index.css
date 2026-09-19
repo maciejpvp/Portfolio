@@ -1,9 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -20,10 +19,21 @@ body {
 }
 
 .canvas {
+  position: relative;
   width: 100vw;
-  height: 100vh;
+  /* Must match the height CanvasContainer gives its own container, or the two boxes
+     disagree on mobile browsers where the URL bar makes 100vh taller than 100dvh. */
+  height: 100dvh;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 50);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* wrapperClass for the device screens. drei clips its <Html transform> wrapper to the
+   canvas (`overflow:hidden` in drei/web/Html.js), which cuts off any content authored
+   larger than the viewport. ScreenSurface already keeps the DOM boxes small; this
+   removes the clip outright. `.canvas` above stays the outer guard. */
+.r3f-screen {
+  overflow: visible !important;
 }
 
 @theme inline {

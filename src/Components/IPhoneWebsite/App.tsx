@@ -14,8 +14,8 @@ export const App = () => {
       onClick={handleClick}
       className="bg-stone-800 text-white flex items-center justify-center relative"
       style={{
-        width: "390px",
-        height: "830px",
+        width: "100%",
+        height: "100%",
         borderRadius: "60px",
         overflow: "hidden",
       }}

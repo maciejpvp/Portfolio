@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FaReact, FaNodeJs, FaGit } from "react-icons/fa";
+import { FaReact, FaNodeJs, FaGit, FaAws } from "react-icons/fa";
 import { GiElectric } from "react-icons/gi";
 import {
   SiTypescript,
@@ -8,7 +8,6 @@ import {
   SiNextdotjs,
   SiMongodb,
   SiExpress,
-  SiAwslambda,
   SiSqlite,
   SiDocker,
   SiFramer,
@@ -37,7 +36,7 @@ const techStack: Tech[] = [
   { name: "Tailwind CSS", icon: <SiTailwindcss />, color: "#38B2AC" },
   { name: "MongoDB", icon: <SiMongodb />, color: "#47A248" },
   { name: "SQLite", icon: <SiSqlite />, color: "#003B57" },
-  { name: "AWS CDK", icon: <SiAwslambda />, color: "#FF9900" },
+  { name: "AWS CDK", icon: <FaAws />, color: "#FF9900" },
   { name: "Docker", icon: <SiDocker />, color: "#2496ED" },
   { name: "Git", icon: <FaGit />, color: "#F05032" },
   { name: "Socket.IO", icon: <GiElectric />, color: "#FFAA00" },

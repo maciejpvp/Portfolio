@@ -1,17 +1,30 @@
-import { CanvasWrapper } from "@isaac_ua/drei-html-fix";
+import { CanvasContainer } from "./Components/CanvasContainer";
 import { Fiber } from "./Fiber";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Loader } from "@react-three/drei";
 import { Mobile } from "./Components/MacbookWebsite/Mobile.tsx";
 
+/**
+ * The 3D scene runs on phones too, so the fallback is gated on capability rather than on
+ * a user-agent guess (which also got iPadOS wrong — it reports itself as a Mac).
+ */
+const supportsWebGL = () => {
+  try {
+    const canvas = document.createElement("canvas");
+    return Boolean(
+      canvas.getContext("webgl2") ?? canvas.getContext("webgl"),
+    );
+  } catch {
+    return false;
+  }
+};
+
 export const App = () => {
-  //eslint-disable-next-line
-  //@ts-ignore
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const [canRender3D] = useState(supportsWebGL);
 
   return (
     <>
-      {isIOS ? (
+      {!canRender3D ? (
         <Mobile />
       ) : (
         <div className="canvas">
@@ -23,7 +36,7 @@ export const App = () => {
             dataStyles={{ fontSize: "1.5rem", fontFamily: "Montserrat" }}
           />
           <div className="absolute w-screen h-screen bg-stone-900" />
-          <CanvasWrapper
+          <CanvasContainer
             canvasProps={{
               shadows: true,
               dpr: [1, 2],
@@ -43,7 +56,7 @@ export const App = () => {
             <Suspense fallback={null}>
               <Fiber />
             </Suspense>
-          </CanvasWrapper>
+          </CanvasContainer>
         </div>
       )}
     </>

@@ -47,7 +47,7 @@ export const App = ({ ios = false }: { ios?: boolean }) => {
   }, [index, deleting]);
 
   return (
-    <div className="bg-stone-900 w-[1920px] h-[1200px] rounded overflow-hidden">
+    <div className="bg-stone-900 w-full h-full rounded overflow-hidden">
       <AnimatePresence>
         {!waiting ? (
           <div
@@ -55,7 +55,7 @@ export const App = ({ ios = false }: { ios?: boolean }) => {
               handleClick(e);
               setWaiting(true);
             }}
-            className="bg-stone-900 flex justify-center items-center w-[1920px] h-[1200px] rounded cursor-pointer"
+            className="bg-stone-900 flex justify-center items-center w-full h-full rounded cursor-pointer"
           >
             <p className="text-[#e2d7d0] text-7xl font-mono tracking-wide">
               {text}
