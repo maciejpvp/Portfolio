@@ -1,12 +1,40 @@
 <!doctype html>
-<html lang="en">
+<!-- The app is dark-only; the class makes the shadcn tokens in index.css resolve dark.
+     It must sit on <html>, not #root: `@custom-variant dark (&:is(.dark *))` matches
+     descendants, so an element carrying the class is not itself styled by it. -->
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/zdj.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Oskar | Web Developer & Designer</title>
-    <script type="module" crossorigin src="/assets/index-D2MlKtKm.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-JDWYN1GH.css">
+    <meta name="theme-color" content="#1c1917" />
+
+    <title>Oskar Pyrzak — Full-stack Developer (React, NestJS, TypeScript, Go)</title>
+    <meta
+      name="description"
+      content="Full-stack developer in Poland. React and NestJS at work; Go, Pulumi and AWS outside it. Open to remote work."
+    />
+    <link rel="canonical" href="https://zahut.me/" />
+
+    <!-- Recruiters paste this link into Slack and email, so the unfurl matters. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://zahut.me/" />
+    <meta
+      property="og:title"
+      content="Oskar Pyrzak — Full-stack Developer (React, NestJS, TypeScript, Go)"
+    />
+    <meta
+      property="og:description"
+      content="Full-stack developer in Poland. React and NestJS at work; Go, Pulumi and AWS outside it. Open to remote work."
+    />
+    <meta property="og:image" content="https://zahut.me/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Oskar Pyrzak, full-stack developer" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="module" crossorigin src="/assets/index-DYLfHpUD.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-C9t3b5TL.css">
   </head>
   <body>
     <div id="root"></div>
