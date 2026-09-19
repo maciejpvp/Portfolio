@@ -104,7 +104,10 @@ export const CanvasContainer = ({ canvasProps, children }: Props) => {
         position: "relative",
         width: "100%",
         height: "100dvh",
-        overflow: "hidden",
+        // `clip`, not `hidden`: `hidden` is a scrollable scrollport, so focusing a control
+        // in the lower half of a device screen (whose 1920x1191 layout box overhangs this
+        // container) would scroll it and jerk the whole scene. See `.canvas` in index.css.
+        overflow: "clip",
       }}
     >
       {size.width > 0 && size.height > 0 && (

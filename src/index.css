@@ -2,6 +2,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* `layer(base)` is load-bearing, not tidiness.
+ *
+ * Unlayered CSS outranks every cascade layer regardless of specificity, and Tailwind v4
+ * puts all utilities in `@layer utilities`. While reset.css was imported unlayered (from
+ * main.tsx), its `* { margin: 0 }` silently beat every `m-*`/`mt-*`/`mx-auto` utility in
+ * the project. Importing it into `base` puts it below the utilities where a reset belongs,
+ * and after Tailwind's own preflight so it still overrides that. */
+@import "./reset.css" layer(base);
+
 @custom-variant dark (&:is(.dark *));
 
 body {
@@ -15,16 +24,20 @@ body {
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
+/* `position: fixed` keeps the scene out of the document's scroll height entirely, so the
+   body needs no `overflow: hidden` — which would otherwise stop PlainView from scrolling.
+
+   `clip` rather than `hidden` is load-bearing: an `overflow: hidden` box is still a
+   programmatically scrollable scrollport. The .r3f-screen layout box is 1920x1191 anchored
+   at the top-left of a much smaller canvas, so focusing a control near the bottom of a
+   device screen would make the browser scroll `.canvas` to reveal it and visibly jerk the
+   whole 3D scene. `clip` makes that impossible. */
 .canvas {
-  position: relative;
-  width: 100vw;
-  /* Must match the height CanvasContainer gives its own container, or the two boxes
-     disagree on mobile browsers where the URL bar makes 100vh taller than 100dvh. */
-  height: 100dvh;
-  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  overflow: clip;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -34,6 +47,53 @@ body {
    removes the clip outright. `.canvas` above stays the outer guard. */
 .r3f-screen {
   overflow: visible !important;
+}
+
+/* Type scale for the MacBook screen.
+ *
+ * That screen is authored into a fixed 1920x1191 DOM box which the 3D camera then
+ * optically SHRINKS. Measured through the transform chain, the authored -> device-pixel
+ * ratio at the MacBook camera preset is ~0.36 on a 1366x768 laptop, ~0.52 at 1080p and
+ * ~0.73 at 1440p. 0.364 is the design floor.
+ *
+ * So `--text-label` (36px) is the smallest size for anything that must be READ: 36 * 0.364
+ * = 13 device px. `--text-caption` (32px -> 11.6) sits just under that and is for secondary
+ * copy only, where a larger line above it already carries the meaning.
+ * Tailwind's `text-sm` (14px) would land at 5 device px — unreadable. For the same reason
+ * this surface needs 3px borders, 8px focus rings, >=40px icons, >=88px hit targets,
+ * rounded-2xl or larger, and font-weight >=500 (Montserrat 400 stems thin out under
+ * minification). These are px, not rem, because rem resolves against <html> and cannot be
+ * rescaled locally.
+ *
+ * PlainView is a genuine 1:1 viewport and uses the normal Tailwind scale instead. */
+@theme {
+  --text-display: 96px;
+  --text-display--line-height: 1.05;
+  --text-display--font-weight: 700;
+  --text-h2: 64px;
+  --text-h2--line-height: 1.15;
+  --text-h2--font-weight: 600;
+  --text-h3: 48px;
+  --text-h3--line-height: 1.2;
+  --text-h3--font-weight: 600;
+  --text-body: 40px;
+  --text-body--line-height: 1.5;
+  --text-label: 36px;
+  --text-label--line-height: 1.3;
+  --text-label--font-weight: 500;
+  /* Below the 13px floor — see the note above. Reserved for secondary copy inside a card
+     that is already surrounded by larger type (ProjectCard's summary and tech chips), where
+     the line above it carries the meaning and this line is scanned, not read. Do not reach
+     for it just to fit more in. */
+  --text-caption: 32px;
+  --text-caption--line-height: 1.35;
+  --text-caption--font-weight: 500;
+
+  /* Raised chip surface — shadcn has no slot for it (was `bg-white/10`). */
+  --color-surface-raised: oklch(1 0 0 / 10%);
+  /* Matches the neon sign in the 3D scene (#ff00ff, Fiber.tsx) so the DOM accent and the
+     WebGL accent are the same colour. */
+  --color-brand: oklch(0.7017 0.3225 328.36);
 }
 
 @theme inline {
@@ -109,13 +169,24 @@ body {
   --sidebar-ring: oklch(0.709 0.01 56.259);
 }
 
+/* The app is dark-only: `<html class="dark">` in index.html. Four values differ from
+   stock shadcn stone so the semantic tokens match the palette the components already
+   hardcoded, and the migration to them stays a visual no-op:
+     - background/card are SWAPPED vs stock. Here cards are *recessed* (page stone-900,
+       card stone-950), which is the existing design; stock dark does the opposite.
+     - foreground is the warm cream #e2d7d0 rather than neutral stone-50.
+     - border is 18%, because 10% over stone-900 is invisible once the MacBook screen is
+       optically shrunk by the 3D camera (see the design-space note below). */
 .dark {
-  --background: oklch(0.147 0.004 49.25);
-  --foreground: oklch(0.985 0.001 106.423);
-  --card: oklch(0.216 0.006 56.043);
-  --card-foreground: oklch(0.985 0.001 106.423);
-  --popover: oklch(0.216 0.006 56.043);
-  --popover-foreground: oklch(0.985 0.001 106.423);
+  color-scheme: dark;
+  --background: oklch(
+    0.216 0.006 56.043
+  ); /* stone-900 #1c1917 — also the Loader bg */
+  --foreground: oklch(0.886 0.0155 55); /* #e2d7d0 */
+  --card: oklch(0.147 0.004 49.25); /* stone-950 #0c0a09 */
+  --card-foreground: oklch(0.886 0.0155 55);
+  --popover: oklch(0.147 0.004 49.25);
+  --popover-foreground: oklch(0.886 0.0155 55);
   --primary: oklch(0.923 0.003 48.717);
   --primary-foreground: oklch(0.216 0.006 56.043);
   --secondary: oklch(0.268 0.007 34.298);
@@ -125,7 +196,7 @@ body {
   --accent: oklch(0.268 0.007 34.298);
   --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 18%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.553 0.013 58.071);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -149,5 +220,53 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Scrollbar for the MacBook screen's panel body. A default 15px bar is ~5 device px after
+   the camera shrink; 18px lands at ~6.5. `scrollbar-gutter: stable` reserves the track so
+   the layout does not reflow on the frame a panel starts overflowing. */
+.screen-scroll {
+  scrollbar-gutter: stable;
+  scrollbar-width: auto;
+  scrollbar-color: var(--color-stone-600) transparent;
+}
+.screen-scroll::-webkit-scrollbar {
+  width: 18px;
+}
+.screen-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.screen-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-stone-600);
+  border-radius: 9px;
+  border: 4px solid transparent;
+  background-clip: content-box;
+}
+
+@media print {
+  /* PlainView is the printable artefact — a recruiter saving it as a PDF should get the
+     document, not a dark background or the interactive chrome. */
+  :root,
+  .dark {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.147 0.004 49.25);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.147 0.004 49.25);
+    --muted-foreground: oklch(0.44 0.01 58);
+    --border: oklch(0.85 0.003 48);
+  }
+  .print\:hidden {
+    display: none !important;
+  }
+  /* Keep a project card whole rather than letting its screenshot land on the next page. */
+  [data-slot="card"],
+  section {
+    break-inside: avoid;
+  }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    word-break: break-all;
   }
 }

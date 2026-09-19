@@ -1,92 +1,85 @@
+import { MotionConfig, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import useCameraStore from "../../Utils/useCameraStore";
-import { LeftSideComponent } from "./LeftSide";
-import { RightSideComponent } from "./RightSide";
 
-export const App = ({ ios = false }: { ios?: boolean }) => {
-  const [text, setText] = useState("");
-  const [index, setIndex] = useState(0);
-  const fullText = "> Open Portfolio...";
-  const [waiting, setWaiting] = useState(ios);
-  const [deleting, setDeleting] = useState(false);
-  const setSelectedCamera = useCameraStore((state) => state.setSelectedCamera);
+import { Shell } from "./Shell";
+import { useFocusLaptop } from "./useFocusLaptop";
 
-  const handleClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setSelectedCamera(2);
-  };
+const FULL_TEXT = "> Open Portfolio...";
+const TYPE_MS = 120;
+const DELETE_MS = 80;
+const PAUSE_MS = 1000;
 
-  useEffect(() => {
-    const timeout = setTimeout(
-      () => {
-        if (!deleting) {
-          // Typing forward
-          if (index < fullText.length) {
-            setText(fullText.slice(0, index + 1));
-            setIndex(index + 1);
-          } else {
-            // Pause at full text before deleting
-            setTimeout(() => setDeleting(true), 1000);
-          }
-        } else {
-          // Deleting backwards
-          if (index > 0) {
-            setText(fullText.slice(0, index - 1));
-            setIndex(index - 1);
-          } else {
-            // Start typing again
-            setDeleting(false);
-          }
-        }
-      },
-      deleting ? 80 : 120,
-    ); // Faster delete, slower type
-
-    return () => clearTimeout(timeout);
-  }, [index, deleting]);
+/**
+ * The MacBook screen. A typewriter splash gates the site, then the tabbed shell.
+ *
+ * Everything here is authored into a fixed 1920x1191 DOM box that the 3D camera optically
+ * shrinks — see the `--text-*` note in index.css for what that means for sizing.
+ */
+export const App = () => {
+  const [open, setOpen] = useState(false);
+  const focusLaptop = useFocusLaptop();
 
   return (
-    <div className="bg-stone-900 w-full h-full rounded overflow-hidden">
-      <AnimatePresence>
-        {!waiting ? (
-          <div
-            onClick={(e) => {
-              handleClick(e);
-              setWaiting(true);
-            }}
-            className="bg-stone-900 flex justify-center items-center w-full h-full rounded cursor-pointer"
-          >
-            <p className="text-[#e2d7d0] text-7xl font-mono tracking-wide">
-              {text}
-              <span className="animate-pulse">▋</span>
-            </p>
-          </div>
+    // reducedMotion="user" must be applied inside the <Html> subtree: drei renders these
+    // children into a separate React root, so React context does not cross the boundary
+    // from the canvas side.
+    <MotionConfig reducedMotion="user">
+      <div
+        {...focusLaptop}
+        className="bg-background h-full w-full overflow-hidden rounded"
+      >
+        {open ? (
+          <Shell />
         ) : (
-          <motion.div
-            key="main"
-            onClick={handleClick}
-            className="grid grid-cols-[30%_70%] gap-2 pt-6 px-4 text-[#e2d7d0] w-full h-full"
-          >
-            <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7, ease: "easeInOut" }}
-            >
-              <LeftSideComponent />
-            </motion.div>
-
-            <motion.div
-              initial={{ x: "100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.7, ease: "easeInOut" }}
-            >
-              <RightSideComponent />
-            </motion.div>
-          </motion.div>
+          <Splash
+            onOpen={() => {
+              setOpen(true);
+            }}
+          />
         )}
-      </AnimatePresence>
-    </div>
+      </div>
+    </MotionConfig>
+  );
+};
+
+const Splash = ({ onOpen }: { onOpen: () => void }) => {
+  const reduceMotion = useReducedMotion();
+  const [typed, setTyped] = useState(reduceMotion ? FULL_TEXT : "");
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const atEnd = !deleting && typed.length === FULL_TEXT.length;
+    const atStart = deleting && typed.length === 0;
+
+    const timeout = setTimeout(
+      () => {
+        if (atEnd) return setDeleting(true);
+        if (atStart) return setDeleting(false);
+        setTyped(FULL_TEXT.slice(0, typed.length + (deleting ? -1 : 1)));
+      },
+      atEnd ? PAUSE_MS : deleting ? DELETE_MS : TYPE_MS,
+    );
+
+    return () => clearTimeout(timeout);
+  }, [typed, deleting, reduceMotion]);
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      // Keyboard visitors need a way in too; the old splash was a div with an onClick.
+      className="focus-visible:ring-ring flex h-full w-full cursor-pointer flex-col items-center justify-center gap-10 focus-visible:ring-8 focus-visible:outline-none"
+    >
+      <p className="text-foreground font-mono text-7xl tracking-wide">
+        {typed}
+        <span className={reduceMotion ? undefined : "animate-pulse"}>▋</span>
+      </p>
+      <span className="text-label text-muted-foreground">
+        Click anywhere to open
+      </span>
+    </button>
   );
 };
 
