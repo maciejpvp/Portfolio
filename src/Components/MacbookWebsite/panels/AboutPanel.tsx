@@ -16,8 +16,6 @@ export const AboutPanel = () => (
       {profile.bio}
     </p>
 
-    <p className="text-body max-w-[1200px] font-medium">{profile.note}</p>
-
     <ul className="flex flex-wrap gap-4">
       {profile.certifications.map((certification) => (
         <li

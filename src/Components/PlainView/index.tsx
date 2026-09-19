@@ -95,7 +95,6 @@ export const PlainView = ({ showSceneLink }: { showSceneLink: boolean }) => (
           <p className="text-muted-foreground mt-3 leading-relaxed">
             {profile.bio}
           </p>
-          <p className="mt-3 leading-relaxed font-medium">{profile.note}</p>
           <ul className="mt-4 flex flex-wrap gap-2">
             {profile.certifications.map((certification) => (
               <li

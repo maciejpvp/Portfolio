@@ -16,7 +16,6 @@ const PAUSE_MS = 1000;
  * shrinks — see the `--text-*` note in index.css for what that means for sizing.
  */
 export const App = () => {
-  const [open, setOpen] = useState(false);
   const focusLaptop = useFocusLaptop();
 
   return (
@@ -28,15 +27,7 @@ export const App = () => {
         {...focusLaptop}
         className="bg-background h-full w-full overflow-hidden rounded"
       >
-        {open ? (
           <Shell />
-        ) : (
-          <Splash
-            onOpen={() => {
-              setOpen(true);
-            }}
-          />
-        )}
       </div>
     </MotionConfig>
   );
